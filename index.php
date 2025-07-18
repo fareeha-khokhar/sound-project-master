@@ -503,7 +503,7 @@
                         </p>
                         <div class="song-play-area">
                             <div class="song-name">
-                                <p>01. Gumaan</p>
+                                <p>01. Clones</p>
                             </div>
                             <audio preload="auto" controls>
                                 <source src="audio/dummy-audio.mp3">
