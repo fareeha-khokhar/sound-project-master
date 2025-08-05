@@ -9,7 +9,7 @@
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title -->
-    <title>One Music - Modern Music HTML5 Template</title>
+    <title>Sound Entertainment</title>
 
     <!-- Favicon -->
     <link rel="icon" href="img/core-img/favicon.ico">
@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="style.css">
 
     <!-- Bootstrap CSS -->
-     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
 
 </head>
 
@@ -33,15 +33,15 @@
         </div>
     </div>
 
-     <!-- Header Area -->
-     <?php include 'components/nav.php'; ?>
+    <!-- Header Area -->
+    <?php include 'components/nav.php'; ?>
     <!-- Header Area End -->
 
 
     <!-- ##### Breadcumb Area Start ##### -->
     <section class="breadcumb-area bg-img bg-overlay" style="background-image: url(img/bg-img/breadcumb3.jpg);">
         <div class="bradcumbContent">
-            <p>See what’s new</p>
+            <p>Up Coming</p>
             <h2>Events</h2>
         </div>
     </section>
@@ -59,12 +59,13 @@
                             <img src="img/bg-img/e1.jpg" alt="">
                         </div>
                         <div class="event-text">
-                            <h4>Dj Night Party</h4>
+                            <h4>Travis Scott</h4>
                             <div class="event-meta-data">
-                                <a href="#" class="event-place">VIP Sala</a>
-                                <a href="#" class="event-date">June 15, 2018</a>
+                                <a href="#" class="event-place">DHA Phase 8</a>
+                                <a href="#" class="event-date mb-2">June 15, 2018</a><br>
+                                <span class="text-white">03191891984</span>
                             </div>
-                            <a href="#" class="btn see-more-btn">See Event</a>
+                            <a href="#" class="btn see-more-btn">Call Now</a>
                         </div>
                     </div>
                 </div>
@@ -76,12 +77,13 @@
                             <img src="img/bg-img/e2.jpg" alt="">
                         </div>
                         <div class="event-text">
-                            <h4>The Mission</h4>
+                            <h4>Aleemrk</h4>
                             <div class="event-meta-data">
-                                <a href="#" class="event-place">Gold Arena</a>
-                                <a href="#" class="event-date">June 15, 2018</a>
+                                <a href="#" class="event-place">DHA Phase 8</a>
+                                <a href="#" class="event-date mb-2">June 15, 2018</a><br>
+                                <span class="text-white">03191891984</span>
                             </div>
-                            <a href="#" class="btn see-more-btn">See Event</a>
+                            <a href="#" class="btn see-more-btn">Call Now</a>
                         </div>
                     </div>
                 </div>
@@ -93,12 +95,13 @@
                             <img src="img/bg-img/e3.jpg" alt="">
                         </div>
                         <div class="event-text">
-                            <h4>Planet ibiza</h4>
+                            <h4>Talha Anjum</h4>
                             <div class="event-meta-data">
-                                <a href="#" class="event-place">Space Ibiza</a>
-                                <a href="#" class="event-date">June 15, 2018</a>
+                                <a href="#" class="event-place">DHA Phase 8</a>
+                                <a href="#" class="event-date mb-2">June 15, 2018</a><br>
+                                <span class="text-white">03191891984</span>
                             </div>
-                            <a href="#" class="btn see-more-btn">See Event</a>
+                            <a href="#" class="btn see-more-btn">Call Now</a>
                         </div>
                     </div>
                 </div>
@@ -189,21 +192,23 @@
                 </div>
 
                 <!-- Single Event Area -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="single-event-area mb-30">
-                        <div class="event-thumbnail">
-                            <img src="img/bg-img/e9.jpg" alt="">
-                        </div>
-                        <div class="event-text">
-                            <h4>Planet ibiza</h4>
-                            <div class="event-meta-data">
-                                <a href="#" class="event-place">Space Ibiza</a>
-                                <a href="#" class="event-date">June 15, 2018</a>
-                            </div>
-                            <a href="#" class="btn see-more-btn">See Event</a>
-                        </div>
-                    </div>
-                </div>
+<div class="col-12 col-md-6 col-lg-4">
+    <div class="single-event-area mb-30">
+        <div class="event-thumbnail">
+            <img src="img/bg-img/e9.jpg" alt="">
+        </div>
+        <div class="event-text">
+            <h4>Planet Ibiza</h4>
+            <div class="event-meta-data">
+                <a href="#" class="event-place">Space Ibiza</a>
+                <a href="#" class="event-date">June 15, 2018</a>
+            </div>
+            <!-- Updated this line below -->
+            <a href="tel:+03191891984" class="btn see-more-btn">Call for Info</a>
+        </div>
+    </div>
+</div>
+
 
             </div>
 
@@ -327,32 +332,10 @@
     </section>
     <!-- ##### Contact Area End ##### -->
 
+   <!-- ##### Footer Area Start ##### -->
+    <?php include '<components/footer.php'; ?>
     <!-- ##### Footer Area Start ##### -->
-    <footer class="footer-area">
-        <div class="container">
-            <div class="row d-flex flex-wrap align-items-center">
-                <div class="col-12 col-md-6">
-                    <a href="#"><img src="img/core-img/logo.png" alt=""></a>
-                    <p class="copywrite-text"><a href="#"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-                </div>
 
-                <div class="col-12 col-md-6">
-                    <div class="footer-nav">
-                        <ul>
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#">Albums</a></li>
-                            <li><a href="#">Events</a></li>
-                            <li><a href="#">News</a></li>
-                            <li><a href="#">Contact</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- ##### Footer Area Start ##### -->
 
     <!-- ##### All Javascript Script ##### -->
     <!-- jQuery-2.2.4 js -->

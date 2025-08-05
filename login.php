@@ -1,3 +1,44 @@
+<?php
+include "admin/build/components/connection.php";
+// if(isset($_SESSION['id'])){
+//   header("location:index.php");
+// }
+?>
+
+<?php
+// Check if the form is submitted
+if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['submit'])) {
+    $username = trim($_POST['username']);
+    $password = $_POST['password'];
+
+    $check = $conn->prepare("select user_id, username, password, role from users where username = ?");
+    $check->bind_param("s", $username);
+    $check->execute();
+    $check->store_result();
+    if ($check->num_rows == 1) {
+        $check->bind_result($id, $uname, $storedPassword, $role);
+        $check->fetch();
+        if (password_verify($password, $storedPassword)) {
+            $_SESSION['id'] = $id;
+            $_SESSION['username'] = $uname;
+            $_SESSION['role'] = $role;
+            if ($role === "admin") {
+                header("location: admin/build/pages/dashboard.php");
+                exit;
+            } else {
+                header("location: index.php");
+                exit;
+            }
+            header("location: admin/build/index.php");
+            exit;
+        } else {
+            echo "<div class='alert alert-danger'>Invalid password</div>";
+        }
+    } else {
+        echo "<div class='alert alert-danger'>User not found </div>";
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +50,7 @@
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title -->
-    <title>One Music - Modern Music HTML5 Template</title>
+    <title>Sound Entertainment- Login</title>
 
     <!-- Favicon -->
     <link rel="icon" href="img/core-img/favicon.ico">
@@ -18,7 +59,7 @@
     <link rel="stylesheet" href="style.css">
 
     <!-- Bootstrap CSS -->
-     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
 
 </head>
 
@@ -33,8 +74,8 @@
         </div>
     </div>
 
-     <!-- Header Area -->
-     <?php include 'components/nav.php'; ?>
+    <!-- Header Area -->
+    <?php include 'components/nav.php'; ?>
     <!-- Header Area End -->
 
 
@@ -56,18 +97,28 @@
                         <h3>Welcome Back</h3>
                         <!-- Login Form -->
                         <div class="login-form">
-                            <form action="#" method="post">
+                            <form method="POST">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Email address</label>
-                                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter E-mail">
-                                    <small id="emailHelp" class="form-text text-muted"><i class="fa fa-lock mr-2"></i>We'll never share your email with anyone else.</small>
+                                    <label for="exampleInputEmail1">Username</label>
+                                    <input type="username" class="form-control" id="exampleInputEmail1" name="username" aria-describedby="emailHelp" placeholder="Enter username" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Password</label>
-                                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                                    <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="Password" required>
+                                    <small id="emailHelp" class="form-text text-muted">
+                                        <i class="fa fa-lock mr-2"></i>We'll never share your password with anyone else.
+                                    </small>
                                 </div>
-                                <button type="submit" class="btn oneMusic-btn mt-30">Login</button>
+                                <button type="submit" name="submit" class="btn oneMusic-btn mt-30 border border-dark w-100">
+                                    Login <i class="fa fa-angle-double-right"></i>
+                                </button>
+                                <!-- Register Link -->
+                                <p class="mt-1 text-center">
+                                    Don't have an account?
+                                    <a href="register.php" class="text-danger font-weight-bold">Register now</a>
+                                </p>
                             </form>
+
                         </div>
                     </div>
                 </div>
@@ -75,33 +126,38 @@
         </div>
     </section>
     <!-- ##### Login Area End ##### -->
+    <?php
+    // Check if form is submitted
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Collect form data safely
+        $email = trim($_POST['email']);
+        $password = $_POST['password'];
 
-    <!-- ##### Footer Area Start ##### -->
-    <footer class="footer-area">
-        <div class="container">
-            <div class="row d-flex flex-wrap align-items-center">
-                <div class="col-12 col-md-6">
-                    <a href="#"><img src="img/core-img/logo.png" alt=""></a>
-                    <p class="copywrite-text"><a href="#"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-                </div>
+        // Validate inputs (basic)
+        if (!empty($email) && !empty($password)) {
+            // Prepare SQL to prevent SQL injection
+            $stmt = $pdo->prepare("SELECT * FROM users WHERE email = :email");
+            $stmt->execute(['email' => $email]);
+            $user = $stmt->fetch();
 
-                <div class="col-12 col-md-6">
-                    <div class="footer-nav">
-                        <ul>
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#">Albums</a></li>
-                            <li><a href="#">Events</a></li>
-                            <li><a href="#">News</a></li>
-                            <li><a href="#">Contact</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
+            if ($user && password_verify($password, $user['password'])) {
+                // Password matches
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['email'] = $user['email'];
+                header("Location: dashboard.php");
+                exit();
+            } else {
+                $error = "Invalid email or password.";
+            }
+        } else {
+            $error = "All fields are required.";
+        }
+    }
+    ?>
     <!-- ##### Footer Area Start ##### -->
+    <?php include '<components/footer.php'; ?>
+    <!-- ##### Footer Area Start ##### -->
+
 
     <!-- ##### All Javascript Script ##### -->
     <!-- jQuery-2.2.4 js -->

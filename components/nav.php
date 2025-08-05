@@ -1,9 +1,9 @@
  <!-- ##### Header Area Start ##### -->
-    <header class="header-area">
+    <header class="header-area" >
         <!-- Navbar Area -->
-        <div class="oneMusic-main-menu">
+        <div class="oneMusic-main-menu" style="position: fixed; top: 10;">
             <div class="classy-nav-container breakpoint-off">
-                <div class="container">
+                <div class="container" >
                     <!-- Menu -->
                     <nav class="classy-navbar justify-content-between" id="oneMusicNav">
 
@@ -28,17 +28,10 @@
                                 <ul class="mt-3">
                                     <li><a href="index.php">Home</a></li>
                                     <li><a href="albums-store.php">Albums</a></li>
-                                    <li><a href="#">Play Now</a>
-                                        <ul class="dropdown">
-                                            <li><a href="albums-store.php">Albums</a></li>
-                                            <li><a href="event.php">Events</a></li>
-                                            <li><a href="blog.html">About Sound</a></li>
-                                            <li><a href="elements.php">Elements</a></li>
-                                            
-                                        </ul>
-                                    </li>
+                                    <li><a href="playlist.php">Play Now</a></li>
+                                    <li><a href="mv.php">Vibe On</a></li>
                                     <li><a href="event.php">Events</a></li>
-                                    <li><a href="About.html">About Sound</a></li>
+                                    <li><a href="About.php">About Sound</a></li>
                                     <li><a href="contact.php">Reach Us</a></li>
                                 </ul>
 
@@ -51,7 +44,7 @@
 
                                     <!-- Cart Button -->
                                     <div class="cart-btn">
-                                        <p><span class="icon-shopping-cart"></span> <span class="quantity">1</span></p>
+                                        <p><span class="fa fa-heart-o"></span> <span class="quantity">1</span></p>
                                     </div>
                                 </div>
                             </div>
