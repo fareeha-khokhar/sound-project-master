@@ -19,7 +19,7 @@ $stmt->bind_result($id, $song_name, $artist_name, $genre, $release_year, $media_
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png" />
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
+  <link rel="icon" type="image/png" href="../../../img/core-img/favicon.ico" />
   <title>Soft UI Dashboard Tailwind</title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -81,7 +81,7 @@ $stmt->bind_result($id, $song_name, $artist_name, $genre, $release_year, $media_
                         <tr class="border-t">
                           <td class="px-4 py-3">
                             
-                            <img src="<?= htmlspecialchars($thumbnail_path) ?>" alt="thumbnail" class="h-12 w-12 rounded object-cover">
+                            <img src="../../<?= htmlspecialchars($thumbnail_path) ?>" alt="thumbnail" class="h-12 w-12 rounded object-cover">
                           </td>
                           <td class="px-4 py-3 font-semibold"><?= htmlspecialchars($song_name) ?></td>
                           <td class="px-4 py-3"><?= htmlspecialchars($artist_name) ?></td>

@@ -1,28 +1,48 @@
+<?php
+include "admin/build/components/connection.php";
+// if(isset($_SESSION['id'])){
+//   header("location:index.php");
+// }
+?>
+
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
+    $email = $_POST['email'];
+    $text = $_POST['text'];
+    $check = $conn->prepare("INSERT INTO feedback (email, message) VALUES (?, ?)");
+    $check->bind_param("ss", $email, $text);
+
+    if ($check->execute()) {
+        echo '<script>
+    alert("Your Feedback is Submitted");
+    window.location.href = "event.php";
+</script>';
+        exit(); // always exit after header redirect
+    } else {
+        echo '<script>alert("Sending Failed! Please try again.")</script>';
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="">
+    <meta name="description" content="Sound Entertainment - Upcoming Events">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-
-    <!-- Title -->
     <title>Sound Entertainment</title>
-
-    <!-- Favicon -->
     <link rel="icon" href="img/core-img/favicon.ico">
-
-    <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css">
-
+    <!-- favicon -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
-
 </head>
 
 <body>
+
     <!-- Preloader -->
     <div class="preloader d-flex align-items-center justify-content-center">
         <div class="lds-ellipsis">
@@ -33,320 +53,138 @@
         </div>
     </div>
 
-    <!-- Header Area -->
+    <!-- Header -->
     <?php include 'components/nav.php'; ?>
-    <!-- Header Area End -->
 
-
-    <!-- ##### Breadcumb Area Start ##### -->
+    <!-- Breadcumb Area -->
     <section class="breadcumb-area bg-img bg-overlay" style="background-image: url(img/bg-img/breadcumb3.jpg);">
         <div class="bradcumbContent">
             <p>Up Coming</p>
             <h2>Events</h2>
         </div>
     </section>
-    <!-- ##### Breadcumb Area End ##### -->
 
-    <!-- ##### Events Area Start ##### -->
+    <!-- Events Section -->
     <section class="events-area section-padding-100">
         <div class="container">
             <div class="row">
+                <?php
+                $query = "SELECT * FROM upcoming_events ORDER BY event_date ASC";
+                $result = $conn->query($query);
 
-                <!-- Single Event Area -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="single-event-area mb-30">
-                        <div class="event-thumbnail">
-                            <img src="img/bg-img/e1.jpg" alt="">
-                        </div>
-                        <div class="event-text">
-                            <h4>Travis Scott</h4>
-                            <div class="event-meta-data">
-                                <a href="#" class="event-place">DHA Phase 8</a>
-                                <a href="#" class="event-date mb-2">June 15, 2018</a><br>
-                                <span class="text-white">03191891984</span>
+                if ($result->num_rows > 0):
+                    while ($event = $result->fetch_assoc()):
+                ?>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="single-event-area mb-30">
+                                <div class="event-thumbnail">
+                                    <img src="admin/<?= htmlspecialchars($event['image_path']) ?>" alt="Event Image">
+                                </div>
+                                <div class="event-text">
+                                    <h4><?= htmlspecialchars($event['title']) ?></h4>
+                                    <div class="event-meta-data">
+                                        <a href="#" class="event-place"><?= htmlspecialchars($event['venue']) ?></a>
+                                        <a href="#" class="event-date mb-2"><?= date("F j, Y", strtotime($event['event_date'])) ?></a>
+                                        <?php if (!empty($event['contact'])): ?>
+                                            <br>
+                                            <a href="tel:<?= htmlspecialchars($event['contact']) ?>" class="btn see-more-btn mt-2">Call Now</a>
+                                        <?php else: ?>
+                                            <a href="#" class="btn see-more-btn">See Event</a>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
                             </div>
-                            <a href="#" class="btn see-more-btn">Call Now</a>
                         </div>
-                    </div>
-                </div>
-
-                <!-- Single Event Area -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="single-event-area mb-30">
-                        <div class="event-thumbnail">
-                            <img src="img/bg-img/e2.jpg" alt="">
-                        </div>
-                        <div class="event-text">
-                            <h4>Aleemrk</h4>
-                            <div class="event-meta-data">
-                                <a href="#" class="event-place">DHA Phase 8</a>
-                                <a href="#" class="event-date mb-2">June 15, 2018</a><br>
-                                <span class="text-white">03191891984</span>
-                            </div>
-                            <a href="#" class="btn see-more-btn">Call Now</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Event Area -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="single-event-area mb-30">
-                        <div class="event-thumbnail">
-                            <img src="img/bg-img/e3.jpg" alt="">
-                        </div>
-                        <div class="event-text">
-                            <h4>Talha Anjum</h4>
-                            <div class="event-meta-data">
-                                <a href="#" class="event-place">DHA Phase 8</a>
-                                <a href="#" class="event-date mb-2">June 15, 2018</a><br>
-                                <span class="text-white">03191891984</span>
-                            </div>
-                            <a href="#" class="btn see-more-btn">Call Now</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Event Area -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="single-event-area mb-30">
-                        <div class="event-thumbnail">
-                            <img src="img/bg-img/e4.jpg" alt="">
-                        </div>
-                        <div class="event-text">
-                            <h4>Dj Night Party</h4>
-                            <div class="event-meta-data">
-                                <a href="#" class="event-place">VIP Sala</a>
-                                <a href="#" class="event-date">June 15, 2018</a>
-                            </div>
-                            <a href="#" class="btn see-more-btn">See Event</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Event Area -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="single-event-area mb-30">
-                        <div class="event-thumbnail">
-                            <img src="img/bg-img/e5.jpg" alt="">
-                        </div>
-                        <div class="event-text">
-                            <h4>The Mission</h4>
-                            <div class="event-meta-data">
-                                <a href="#" class="event-place">Gold Arena</a>
-                                <a href="#" class="event-date">June 15, 2018</a>
-                            </div>
-                            <a href="#" class="btn see-more-btn">See Event</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Event Area -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="single-event-area mb-30">
-                        <div class="event-thumbnail">
-                            <img src="img/bg-img/e6.jpg" alt="">
-                        </div>
-                        <div class="event-text">
-                            <h4>Planet ibiza</h4>
-                            <div class="event-meta-data">
-                                <a href="#" class="event-place">Space Ibiza</a>
-                                <a href="#" class="event-date">June 15, 2018</a>
-                            </div>
-                            <a href="#" class="btn see-more-btn">See Event</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Event Area -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="single-event-area mb-30">
-                        <div class="event-thumbnail">
-                            <img src="img/bg-img/e7.jpg" alt="">
-                        </div>
-                        <div class="event-text">
-                            <h4>Dj Night Party</h4>
-                            <div class="event-meta-data">
-                                <a href="#" class="event-place">VIP Sala</a>
-                                <a href="#" class="event-date">June 15, 2018</a>
-                            </div>
-                            <a href="#" class="btn see-more-btn">See Event</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Event Area -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="single-event-area mb-30">
-                        <div class="event-thumbnail">
-                            <img src="img/bg-img/e8.jpg" alt="">
-                        </div>
-                        <div class="event-text">
-                            <h4>The Mission</h4>
-                            <div class="event-meta-data">
-                                <a href="#" class="event-place">Gold Arena</a>
-                                <a href="#" class="event-date">June 15, 2018</a>
-                            </div>
-                            <a href="#" class="btn see-more-btn">See Event</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Event Area -->
-<div class="col-12 col-md-6 col-lg-4">
-    <div class="single-event-area mb-30">
-        <div class="event-thumbnail">
-            <img src="img/bg-img/e9.jpg" alt="">
-        </div>
-        <div class="event-text">
-            <h4>Planet Ibiza</h4>
-            <div class="event-meta-data">
-                <a href="#" class="event-place">Space Ibiza</a>
-                <a href="#" class="event-date">June 15, 2018</a>
-            </div>
-            <!-- Updated this line below -->
-            <a href="tel:+03191891984" class="btn see-more-btn">Call for Info</a>
-        </div>
-    </div>
-</div>
-
-
+                <?php
+                    endwhile;
+                else:
+                    echo '<p class="text-center text-light">🚫 No upcoming events found.</p>';
+                endif;
+                ?>
             </div>
 
             <div class="row">
                 <div class="col-12">
                     <div class="load-more-btn text-center mt-70">
-                        <a href="#" class="btn oneMusic-btn">Load More <i class="fa fa-angle-double-right"></i></a>
+                        <a href="albums-store.php" class="btn oneMusic-btn">Listen to our music <i class="fa fa-angle-double-right"></i></a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <!-- ##### Events Area End ##### -->
 
-    <!-- ##### Newsletter & Testimonials Area Start ##### -->
+    <!-- Newsletter & Testimonials -->
     <section class="newsletter-testimonials-area">
         <div class="container">
             <div class="row">
 
-                <!-- Newsletter Area -->
+                <!-- Newsletter -->
                 <div class="col-12 col-lg-6">
                     <div class="newsletter-area mb-100">
                         <div class="section-heading text-left mb-50">
-                            <p>See what’s new</p>
-                            <h2>Subscribe to newsletter</h2>
+                            <p>Leave your Feedback</p>
+                            <h2>Say something you find nice</h2>
                         </div>
                         <div class="newsletter-form">
-                            <form action="#">
-                                <input type="search" name="search" id="newsletterSearch" placeholder="E-mail">
-                                <button type="submit" class="btn oneMusic-btn">Subscribe <i class="fa fa-angle-double-right"></i></button>
+                            <form method="post">
+                                <input type="search" name="email" id="newsletterSearch" placeholder="E-mail" class="p-3">
+                                <input type="text" name="text" id="Message" placeholder="Message" class="p-3">
+                                <button type="submit" name="submit" class="btn oneMusic-btn text-center">Send <i class="fa fa-angle-double-right"></i></button>
                             </form>
                         </div>
                     </div>
                 </div>
 
-                <!-- Testimonials Area -->
-                <div class="col-12 col-lg-6">
+                <!-- review -->
+                <div class="col-12 col-lg-6 ">
                     <div class="testimonials-area mb-100 bg-img bg-overlay" style="background-image: url(img/bg-img/bg-3.jpg);">
-                        <div class="section-heading white text-left mb-50">
-                            <p>See what’s new</p>
-                            <h2>Testimonial</h2>
+                        <div class="section-heading white text-left mb-50 pt-5 pb-3">
+                            <span class="h6 text-light">What Our Pookies Say</span>
+                            <br>
+                            <h2 class="h1">Feedback:</h2>
                         </div>
-                        <!-- Testimonial Slide -->
-                        <div class="testimonials-slide owl-carousel">
-                            <!-- Single Slide -->
-                            <div class="single-slide">
-                                <p>Nam tristique ex vel magna tincidunt, ut porta nisl finibus. Vivamus eu dolor eu quam varius rutrum. Fusce nec justo id sem aliquam fringilla nec non lacus. Suspendisse eget lobortis nisi, ac cursus odio. Vivamus nibh velit, rutrum.</p>
-                                <div class="testimonial-info d-flex align-items-center">
-                                    <div class="testimonial-thumb">
-                                        <img src="img/bg-img/t1.jpg" alt="">
+                        <div class="testimonials-slide owl-carousel pt-2">
+                            <?php
+                            $feedback_query = "SELECT * FROM feedback ORDER BY id DESC LIMIT 10";
+                            $feedback_result = $conn->query($feedback_query);
+
+                            if ($feedback_result && $feedback_result->num_rows > 0):
+                                while ($row = $feedback_result->fetch_assoc()):
+                                    $email = htmlspecialchars($row['email']);
+                                    $message = htmlspecialchars($row['message']);
+                                    $name = explode('@', $email)[0]; // Use name from email before '@'
+                            ?>
+                                    <div class="single-slide pb-5">
+                                        <p>“<?= $message ?>”</p>
+                                        <div class="testimonial-info d-flex align-items-center">
+                                            <p><i class="fas fa-user fa-lg me-2 pb-1"></i></p>
+                                            <p> <?= ucfirst($name) ?>, User</p>
+                                        </div>
                                     </div>
-                                    <p>William Smith, Customer</p>
-                                </div>
-                            </div>
-                            <!-- Single Slide -->
-                            <div class="single-slide">
-                                <p>Nam tristique ex vel magna tincidunt, ut porta nisl finibus. Vivamus eu dolor eu quam varius rutrum. Fusce nec justo id sem aliquam fringilla nec non lacus. Suspendisse eget lobortis nisi, ac cursus odio. Vivamus nibh velit, rutrum.</p>
-                                <div class="testimonial-info d-flex align-items-center">
-                                    <div class="testimonial-thumb">
-                                        <img src="img/bg-img/t1.jpg" alt="">
-                                    </div>
-                                    <p>Nazrul Islam, Developer</p>
-                                </div>
-                            </div>
+                            <?php
+                                endwhile;
+                            else:
+                                echo "<p class='text-light text-center'>No reviews yet.</p>";
+                            endif;
+                            ?>
                         </div>
+
                     </div>
                 </div>
 
             </div>
         </div>
     </section>
-    <!-- ##### Newsletter & Testimonials Area End ##### -->
-
-    <!-- ##### Contact Area Start ##### -->
-    <section class="contact-area section-padding-100 bg-img bg-overlay bg-fixed has-bg-img" style="background-image: url(img/bg-img/bg-2.jpg);">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="section-heading white">
-                        <p>See what’s new</p>
-                        <h2>Get In Touch</h2>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-12">
-                    <!-- Contact Form Area -->
-                    <div class="contact-form-area">
-                        <form action="#" method="post">
-                            <div class="row">
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="name" placeholder="Name">
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="form-group">
-                                        <input type="email" class="form-control" id="email" placeholder="E-mail">
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="subject" placeholder="Subject">
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <textarea name="message" class="form-control" id="message" cols="30" rows="10" placeholder="Message"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12 text-center">
-                                    <button class="btn oneMusic-btn mt-30" type="submit">Send <i class="fa fa-angle-double-right"></i></button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- ##### Contact Area End ##### -->
-
-   <!-- ##### Footer Area Start ##### -->
-    <?php include '<components/footer.php'; ?>
-    <!-- ##### Footer Area Start ##### -->
 
 
-    <!-- ##### All Javascript Script ##### -->
-    <!-- jQuery-2.2.4 js -->
+    <!-- Footer -->
+    <?php include 'components/footer.php'; ?>
+
+    <!-- Scripts -->
     <script src="js/jquery/jquery-2.2.4.min.js"></script>
-    <!-- Popper js -->
     <script src="js/bootstrap/popper.min.js"></script>
-    <!-- Bootstrap js -->
     <script src="js/bootstrap/bootstrap.min.js"></script>
-    <!-- All Plugins js -->
     <script src="js/plugins/plugins.js"></script>
-    <!-- Active js -->
     <script src="js/active.js"></script>
 </body>
 

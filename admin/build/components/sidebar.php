@@ -128,13 +128,13 @@
                 fill="currentColor" />
             </svg>
           </div>
-          <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Music video</span>
+          <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Upload Media</span>
         </a>
       </li>
       <li class="mt-0.5 w-full">
         <a
           class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors"
-          href="../pages/addsong.php">
+          href="../pages/media-library.php">
           <div
             class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
             <svg
@@ -151,50 +151,7 @@
                 fill="currentColor" />
             </svg>
           </div>
-          <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Songs</span>
-        </a>
-      </li>
-
-
-      <li class="mt-0.5 w-full">
-        <a
-          class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors"
-          href="../pages/billing.php">
-          <div
-            class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center fill-current stroke-0 text-center xl:p-2.5">
-            <svg
-              width="12px"
-              height="12px"
-              viewBox="0 0 43 36"
-              version="1.1"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink">
-              <title>credit-card</title>
-              <g
-                stroke="none"
-                stroke-width="1"
-                fill="none"
-                fill-rule="evenodd">
-                <g
-                  transform="translate(-2169.000000, -745.000000)"
-                  fill="#FFFFFF"
-                  fill-rule="nonzero">
-                  <g transform="translate(1716.000000, 291.000000)">
-                    <g transform="translate(453.000000, 454.000000)">
-                      <path
-                        class="fill-slate-800 opacity-60"
-                        d="M43,10.7482083 L43,3.58333333 C43,1.60354167 41.3964583,0 39.4166667,0 L3.58333333,0 C1.60354167,0 0,1.60354167 0,3.58333333 L0,10.7482083 L43,10.7482083 Z"></path>
-                      <path
-                        class="fill-slate-800"
-                        d="M0,16.125 L0,32.25 C0,34.2297917 1.60354167,35.8333333 3.58333333,35.8333333 L39.4166667,35.8333333 C41.3964583,35.8333333 43,34.2297917 43,32.25 L43,16.125 L0,16.125 Z M19.7083333,26.875 L7.16666667,26.875 L7.16666667,23.2916667 L19.7083333,23.2916667 L19.7083333,26.875 Z M35.8333333,26.875 L28.6666667,26.875 L28.6666667,23.2916667 L35.8333333,23.2916667 L35.8333333,26.875 Z"></path>
-                    </g>
-                  </g>
-                </g>
-              </g>
-            </svg>
-          </div>
-          <span
-            class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Billing</span>
+          <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Media Library</span>
         </a>
       </li>
 
@@ -261,7 +218,7 @@
       <li class="mt-0.5 w-full">
         <a
           class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors"
-          href="../pages/profile.php">
+          href="../pages/user.php">
           <div
             class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
             <svg
@@ -299,14 +256,14 @@
             </svg>
           </div>
           <span
-            class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">user</span>
+            class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Registered User</span>
         </a>
       </li>
 
       <li class="mt-0.5 w-full">
         <a
           class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors"
-          href="../pages/sign-in.php">
+          href="../../../login.php">
           <div
             class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
             <svg
@@ -348,7 +305,7 @@
       <li class="mt-0.5 w-full">
         <a
           class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors"
-          href="../pages/sign-up.php">
+          href="../../../register.php">
           <div
             class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
             <svg

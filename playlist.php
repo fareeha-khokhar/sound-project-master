@@ -7,7 +7,7 @@ include 'admin/build/components/connection.php'; // Your DB connection
 // Fetch all songs
 $stmt = $conn->prepare("SELECT id, title, artist, genre, release_year, media_type,media_path, description, thumbnail_path FROM media_library WHERE media_type = 'audio' ORDER BY id DESC");
 $stmt->execute();
-$stmt->bind_result($id, $song_name, $artist_name, $genre, $release_year, $media_type,$media_path, $lyrics, $thumbnail_path);
+$stmt->bind_result($id, $song_name, $artist_name, $genre, $release_year, $media_type, $media_path, $lyrics, $thumbnail_path);
 
 ?>
 
@@ -29,72 +29,9 @@ $stmt->bind_result($id, $song_name, $artist_name, $genre, $release_year, $media_
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
 
-    body {
-      margin: 0;
-      background: #121212;
-      color: #fff;
-      font-family: 'Inter', Arial, sans-serif;
-      overflow-x: hidden;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    .maindiv {
-      display: flex;
-      height: 100vh;
-      width: 100%;
-      overflow: hidden;
-    }
-
-    /* LEFT COLUMN */
-    .sidebar {
-      width: 300px;
-      background: #000;
-      display: flex;
-      flex-direction: column;
-      padding: 20px;
-    }
-
-    .sidebar-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      color: #fff;
-      font-weight: 700;
-      font-size: 20px;
-      margin-bottom: 25px;
-    }
-
-    .sidebar-header span {
-      cursor: pointer;
-      font-weight: 700;
-    }
-
-    .sidebar-buttons {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 20px;
-    }
-
-    .btn {
-      background: #282828;
-      padding: 8px 16px;
-      border-radius: 50px;
-      font-weight: 700;
-      font-size: 14px;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .btn.active {
-      background: #fff;
-      color: #000;
-    }
-
+   
     .search-box {
+      margin-top: 15px;
       margin-bottom: 15px;
     }
 
@@ -112,54 +49,6 @@ $stmt->bind_result($id, $song_name, $artist_name, $genre, $release_year, $media_
       color: #666;
     }
 
-    .library-list {
-      flex-grow: 1;
-      overflow-y: auto;
-    }
-
-    .library-item {
-      display: flex;
-      align-items: center;
-      padding: 8px 6px;
-      border-radius: 4px;
-      cursor: pointer;
-      color: #b3b3b3;
-      font-size: 14px;
-      margin-bottom: 5px;
-    }
-
-    .library-item.active,
-    .library-item:hover {
-      background: #282828;
-      color: #1db954;
-    }
-
-    .library-item .icon {
-      width: 32px;
-      height: 32px;
-      background: linear-gradient(135deg, #B60B68, #41157F);
-      border-radius: 6px;
-      margin-right: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .library-item .icon svg {
-      fill: #fff;
-      width: 18px;
-      height: 18px;
-    }
-
-    .library-list::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    .library-list::-webkit-scrollbar-thumb {
-      background-color: #444;
-      border-radius: 3px;
-    }
-
     /* CENTER COLUMN */
     .playlist-section {
       flex-grow: 1;
@@ -169,6 +58,7 @@ $stmt->bind_result($id, $song_name, $artist_name, $genre, $release_year, $media_
       flex-direction: column;
       overflow: hidden;
     }
+
 
     .playlist-header {
       display: flex;
@@ -265,38 +155,7 @@ $stmt->bind_result($id, $song_name, $artist_name, $genre, $release_year, $media_
       color: #430C86;
     }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      color: #b3b3b3;
-      font-size: 14px;
-    }
-
-    thead {
-      border-bottom: 1px solid #282828;
-    }
-
-    th,
-    td {
-      text-align: left;
-      padding: 12px 10px;
-    }
-
-    th {
-      text-transform: uppercase;
-      font-weight: 600;
-      opacity: 0.7;
-    }
-
-    tbody tr {
-      cursor: pointer;
-    }
-
-    tbody tr:hover {
-      background: #282828;
-      color: white;
-    }
-
+  
     .song-number {
       width: 30px;
     }
@@ -479,195 +338,118 @@ $stmt->bind_result($id, $song_name, $artist_name, $genre, $release_year, $media_
         right: 0;
       }
     }
+/* Optional: Make hover rows visually pop */
+table tbody tr.hover-row:hover {
+  background-color: #1e1e1e !important;
+  color: #fff;
+}
+
+/* Improve readability */
+table td,
+table th {
+  vertical-align: middle;
+}
+
   </style>
 </head>
 
-<body>
+<body class="bg-dark text-light" style="font-family: 'Inter', sans-serif;">
   <!-- Header Area -->
   <?php include 'components/nav.php'; ?>
   <!-- Header Area End -->
-  <div class="mt-5 mb-5 pt-1">
 
-  </div>
-  <div class="maindiv">
-    <!-- LEFT COLUMN -->
-    <aside class="sidebar">
-      <div class="sidebar-header">
-        <span>Your Library</span>
-        <span>＋</span>
-      </div>
+  <div class="container-fluid mt-5 pt-3">
+    <div class="row">
 
-      <div class="sidebar-buttons">
-        <div class="btn active">Playlists</div>
-        <div class="btn">Artists</div>
-        <div class="btn">Albums</div>
-      </div>
-
-      <div class="search-box">
-        <input type="text" placeholder="Search your library" />
-      </div>
-
-      <div class="library-list" tabindex="0">
-        <div class="library-item active">
-          <div class="icon">
+      <!-- CENTER COLUMN -->
+      <section class="col-md-8 playlist-section" aria-label="Playlist">
+        <header class="d-flex align-items-center gap-4 mb-4">
+          <div class="playlist-cover d-flex justify-content-center align-items-center">
             <svg viewBox="0 0 24 24">
-              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3 9.24 3 10.91 3.81 12 5.09 13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+              2 5.42 4.42 3 7.5 3 9.24 3 10.91 3.81 
+              12 5.09 13.09 3.81 14.76 3 16.5 3 
+              19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+              6.86-8.55 11.54L12 21.35z" />
             </svg>
           </div>
-          Liked Songs
-        </div>
-        <div class="library-item">
-          <img src="img/cover/see you again.jpg" alt="JANI" style="width: 32px; height: 32px; border-radius: 6px; margin-right: 12px;">
-          JANI
-        </div>
-        <div class="library-item">
-          <img src="img/cover/see you again.jpg" alt="Guzaarishien" style="width: 32px; height: 32px; border-radius: 6px; margin-right: 12px;">
-          Guzaarishien (From "Parwari...")
-        </div>
-        <div class="library-item">
-          <img src="img/cover/see you again.jpg" alt="Talha Anjum" style="width: 32px; height: 32px; border-radius: 6px; margin-right: 12px;">
-          Talha Anjum
-        </div>
-        <div class="library-item">
-          <img src="img/cover/see you again.jpg" alt="My Terrible Mind" style="width: 32px; height: 32px; border-radius: 6px; margin-right: 12px;">
-          My Terrible Mind
-        </div>
-        <div class="library-item">
-          <img src="img/cover/see you again.jpg" alt="Soulfly" style="width: 32px; height: 32px; border-radius: 6px; margin-right: 12px;">
-          Soulfly
-        </div>
-        <div class="library-item">
-          <img src="img/cover/see you again.jpg" alt="Galera" style="width: 32px; height: 32px; border-radius: 6px; margin-right: 12px;">
-          Galera
-        </div>
-        <div class="library-item">
-          <img src="img/cover/see you again.jpg" alt="Eminem" style="width: 32px; height: 32px; border-radius: 6px; margin-right: 12px;">
-          Eminem
-        </div>
-        <div class="library-item">
-          <img src="img/cover/see you again.jpg" alt="Yun Jin" style="width: 32px; height: 32px; border-radius: 6px; margin-right: 12px;">
-          Yun Jin
-        </div>
 
-        <!-- Add more library items as needed -->
-      </div>
-    </aside>
+          <div class="playlist-info">
+            <small>PLAYLIST</small>
+            <h1>My Favorite Songs</h1>
+            <span>24 songs, 1 hr 25 mins</span>
 
-    <!-- CENTER COLUMN -->
-    <section class="playlist-section" aria-label="Playlist">
-      <header class="playlist-header">
-        <div class="playlist-cover" aria-label="Playlist cover">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
-            <rect width="24" height="24" rx="4" fill="#FFFFFF" />
-            <path d="M12 7v10l6-5-6-5z" fill="#430C86" />
-          </svg>
+            <div class="search-box mt-3">
+              <input type="text" placeholder="Search your library" class="form-control bg-dark text-light" />
+            </div>
+          </div>
+        </header>
+
+        <table class="table table-borderless text-light align-middle">
+  <thead class="border-bottom border-secondary">
+    <tr>
+      <th scope="col" class="text-secondary">#</th>
+      <th scope="col" class="text-secondary">Thumbnail</th>
+      <th scope="col" class="text-secondary">Artist</th>
+      <th scope="col" class="text-secondary">Title</th>
+      <th scope="col" class="text-secondary">Genre</th>
+      <th scope="col" class="text-end text-secondary">Play</th>
+    </tr>
+  </thead>
+  <tbody>
+    <?php while ($stmt->fetch()): ?>
+      <tr class="hover-row">
+        <td><?= htmlspecialchars($id) ?></td>
+        <td>
+          <img src="admin/<?= htmlspecialchars($thumbnail_path) ?>" class="img-fluid rounded" style="max-width: 60px;">
+        </td>
+        <td><?= htmlspecialchars($artist_name) ?></td>
+        <td><?= htmlspecialchars($song_name) ?></td>
+        <td><?= htmlspecialchars($genre) ?></td>
+        <td class="text-end">
+          <audio controls style="width: 220px;">
+            <source src="admin/<?= htmlspecialchars($media_path) ?>" type="audio/mpeg">
+          </audio>
+        </td>
+      </tr>
+    <?php endwhile; ?>
+  </tbody>
+</table>
+
+      </section>
+
+      <!-- RIGHT COLUMN -->
+      <aside class="col-md-4 right-panel bg-dark p-4 rounded">
+        <h3 class="text-white mb-3">Now Playing</h3>
+        <div class="current-song">
+          <img src="img/cover/7years.jpg" class="img-fluid rounded mb-3" alt="Current song">
+          <div class="fw-bold fs-5">7 Years</div>
+          <div class="text-secondary fst-italic mb-2">by Lukas Graham</div>
+          <p class="text-light small">
+            Once, I was seven years old, my mama told me
+            "Go make yourself some friends or you'll be lonely"
+          </p>
         </div>
-        <div class="playlist-info">
-          <small>PLAYLIST</small>
-          <h1>My Favorite Songs</h1>
-          <span>24 songs, 1 hr 25 mins</span>
-          
-          <div class="search-box">
-        <input type="text" placeholder="Search your library" />
-      </div>
-        </div>
-      </header>
-
-
-      <table aria-describedby="playlist-description" role="table">
-        <thead>
-          <tr>
-            <th class="song-number" scope="col">#</th>
-            <th scope="col">Thumbnail</th>
-            <th scope="col">Album</th>
-            <th scope="col">Title</th>
-            <th scope="col">Genre</th>
-            <th scope="col" style="text-align:right;">Duration</th>
-            <th scope="col" style="text-align:right;">Duration</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php while ($stmt->fetch()): ?>
-            <tr tabindex="0" aria-label="1. Midnight City by M83, Duration 4 minutes 4 seconds" class="border-t">
-              <td class="song-number"><?= htmlspecialchars($id) ?></td>
-              <td class="song-title">
-                <img src="admin/<?= htmlspecialchars($thumbnail_path) ?>" class="w-full h-40 object-cover rounded mb-3">
-                <div class="song-details">
-                </div>
-              </td>
-              <td>
-                <div class="artist-name"><?= htmlspecialchars($artist_name) ?></div>
-              </td>
-              <td>
-                <div class="song-name"><?= htmlspecialchars($song_name) ?></div>
-              </td>
-              <td class="song-album"><?= htmlspecialchars($genre) ?></td>
-              <td class="song-duration"><audio controls class="w-full mt-2">
-                    <source src="admin/<?= htmlspecialchars($media_path) ?>" type="audio/mpeg">
-                  </audio></td>
-              <td class="song-duration"><i class="fas fa-play"></i></td>
-            </tr>
-
-          <?php endwhile; ?>
-
-        <tbody>
-      </table>
-    </section>
-
-    <!-- RIGHT COLUMN -->
-    <aside class="right-panel" aria-label="Currently Playing">
-      <h3>Now Playing</h3>
-      <div class="current-song" tabindex="0" aria-live="polite">
-        <img src="img/cover/7years.jpg" alt="Midnight City Album Art" />
-        <div style="display: flex; gap: 40px; align-items: center;">
-          <div class="current-song-info" style="display: inline;">7 Years</div>
-          <div class="current-song-artist" style="display: inline; font-style: italic;">by Lukas Graham</div>
-
-        </div>
-        <p>Once, I was seven years old, my mama told me
-          "Go make yourself some friends or you'll be lonely"</p>
-      </div>
-    </aside>
+      </aside>
+    </div>
   </div>
 
   <!-- Bottom Player Bar -->
-  <div class="player-bar" role="region" aria-label="Music player controls">
-    <div class="player-info">
-      <img src="img/cover/7years.jpg" alt="Midnight City Album Art" />
-      <div class="player-info-details">
-        <div class="player-song-title">7 Years</div>
-        <div class="player-artist">by Lukas Graham</div>
+  <!-- <div class="player-bar d-flex justify-content-between align-items-center px-4">
+    <div class="player-info d-flex align-items-center gap-3">
+      <img src="img/cover/7years.jpg" class="rounded" style="width: 48px; height: 48px;">
+      <div>
+        <div class="fw-bold">7 Years</div>
+        <small class="text-secondary">by Lukas Graham</small>
       </div>
     </div>
-    <div class="player-controls" role="group" aria-label="Playback controls" style="display: flex; justify-content: center; gap: 20px; margin: 20px 0;">
-      <button aria-label="Previous" style="background-color: white; color: #3B126C; border: none; padding: 10px 16px; font-size: 18px; border-radius: 50%; cursor: pointer; transition: 0.3s;">
-        &#9664;&#9664;
-      </button>
-      <button aria-label="Play/Pause" style="background-color: white; color: #3B126C; border: none; padding: 12px 18px; font-size: 20px; border-radius: 50%; cursor: pointer; transition: 0.3s;">
-        &#9654;
-      </button>
-      <button aria-label="Next" style="background-color: white; color: #3B126C; border: none; padding: 10px 16px; font-size: 18px; border-radius: 50%; cursor: pointer; transition: 0.3s;">
-        &#9654;&#9654;
-      </button>
+    <div class="player-controls d-flex gap-3">
+      <button class="btn btn-light rounded-circle px-3 py-2">&#9664;&#9664;</button>
+      <button class="btn btn-light rounded-circle px-4 py-2">&#9654;</button>
+      <button class="btn btn-light rounded-circle px-3 py-2">&#9654;&#9654;</button>
     </div>
-
-  </div>
-  <!-- ##### Footer Area Start ##### -->
-  <?php include '<components/footer.php'; ?>
-  <!-- ##### Footer Area Start ##### -->
-
-  <!-- ##### All Javascript Script ##### -->
-  <!-- jQuery-2.2.4 js -->
-  <script src="js/jquery/jquery-2.2.4.min.js"></script>
-  <!-- Popper js -->
-  <script src="js/bootstrap/popper.min.js"></script>
-  <!-- Bootstrap js -->
-  <script src="js/bootstrap/bootstrap.min.js"></script>
-  <!-- All Plugins js -->
-  <script src="js/plugins/plugins.js"></script>
-  <!-- Active js -->
-  <script src="js/active.js"></script>
-
+  </div> -->
 </body>
+
 
 </html>

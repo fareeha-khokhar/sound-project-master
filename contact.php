@@ -16,8 +16,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     $check->bind_param("ssss", $name, $email, $subject, $message);
 
     if ($check->execute()) {
-        echo '<script>alert("Your Message is Forwarded to our team.")</script>';
-        header("Location: contact.php");
+        echo '<script>
+    alert("Your Feedback is Submitted");
+    window.location.href = "event.php";
+</script>';
         exit(); // always exit after header redirect
     } else {
         echo '<script>alert("Sending Failed! Please try again.")</script>';

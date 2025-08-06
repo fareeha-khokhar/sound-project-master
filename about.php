@@ -1,3 +1,20 @@
+<?php
+include 'admin/build/components/connection.php';
+
+$para1 = $para2 = $para3 = $mission = $vision = $value = '';
+$result = $conn->query("SELECT * FROM about_page ORDER BY id DESC LIMIT 1");
+
+if ($result && $result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $para1 = $row['para1'];
+    $para2 = $row['para2'];
+    $para3 = $row['para3'];
+    $mission = $row['mission'];
+    $vision = $row['vision'];
+    $value  = $row['value'];
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -79,224 +96,150 @@
     </section>
     <!-- ##### Breadcumb Area End ##### -->
     <!-- ##### About Area Start ##### -->
-    <section class="about-area section-padding-100">
-        <div class="container">
-            <div class="row align-items-center mb-5">
-                <div class="col-12 col-lg-5">
-                    <img src="img/bg-img/a9.jpg" alt="About Sound Entertainment" id="aboutimg" class="img-fluid rounded shadow" width="90%">
-                </div>
-                <div class="col-12 col-lg-7">
-
-                    <p>
-                        Sound Entertainment is more than just music — it's an immersive journey that celebrates rhythm, culture, and creativity. Founded with a vision to revolutionize how people experience audio content, we bring together the finest in music production, live events, and digital entertainment to create unforgettable moments for our global audience.
-                    </p>
-                    <br>
-                    <p>
-                        From high-energy festivals to soulful acoustic sets, Sound Entertainment curates performances that resonate deeply with fans of all genres. We’re proud to work with emerging talents and global icons, building a platform where music meets innovation.
-                    </p>
-                    <br>
-                    <p>
-                        Our mission is to connect people through sound. Whether you're streaming the latest hits, exploring rare indie albums, or dancing at one of our sold-out events, you're part of the Sound family — a community built on passion, creativity, and vibe.
-                    </p>
-                </div>
+<section class="about-area section-padding-100">
+    <div class="container">
+        <div class="row align-items-center mb-5">
+            <div class="col-12 col-lg-5">
+                <img src="img/bg-img/a9.jpg" alt="About Sound Entertainment" id="aboutimg" class="img-fluid rounded shadow" width="90%">
             </div>
-
-            <div class="row text-center">
-                <div class="col-md-4 mb-4">
-                    <div class="p-4 border rounded shadow-sm h-100">
-                        <i class="fa fa-music fa-2x mb-2 about-icon"></i>
-                        <h5>Our Mission</h5>
-                        <p>To inspire, connect, and entertain audiences through the power of sound, blending creativity with technology.</p>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="p-4 border rounded shadow-sm h-100">
-                        <i class="fa fa-bullseye fa-2x mb-2 about-icon"></i>
-                        <h5>Our Vision</h5>
-                        <p>To become the leading global destination for immersive music experiences, talent discovery, and digital sound innovation.</p>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="p-4 border rounded shadow-sm h-100">
-                        <i class="fa fa-users fa-2x mb-2 about-icon"></i>
-                        <h5>Our Values</h5>
-                        <p>Creativity, Inclusivity, Excellence, and the relentless pursuit of authentic musical expression.</p>
-                    </div>
-                </div>
+            <div class="col-12 col-lg-7">
+                <p><?= htmlspecialchars($para1) ?></p><br>
+                <p><?= htmlspecialchars($para2) ?></p><br>
+                <p><?= htmlspecialchars($para3) ?></p>
             </div>
         </div>
-    </section>
-    <!-- ##### About Area End ##### -->
 
-    <!-- ##### Blog Area Start ##### -->
-    <div class="blog-area section-padding-100">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 col-lg-9">
-
-                    <!-- Single Post Start -->
-                    <div class="single-blog-post mb-100 wow fadeInUp" data-wow-delay="100ms">
-                        <!-- Post Thumb -->
-                        <div class="blog-post-thumb mt-30">
-                            <a href="#"><img src="img/bg-img/blog1.jpg" alt=""></a>
-                            <!-- Post Date -->
-                            <div class="post-date">
-                                <span>15</span>
-                                <span>June ‘18</span>
-                            </div>
-                        </div>
-
-                        <!-- Blog Content -->
-                        <div class="blog-content">
-                            <!-- Post Title -->
-                            <a href="#" class="post-title">5 Festivals you shouldn’t miss this summer</a>
-                            <!-- Post Meta -->
-                            <div class="post-meta d-flex mb-30">
-                                <p class="post-author">By<a href="#"> Admin</a></p>
-                                <p class="tags">in<a href="#"> Events</a></p>
-                                <p class="tags"><a href="#">2 Comments</a></p>
-                            </div>
-                            <!-- Post Excerpt -->
-                            <p>Pellentesque sit amet velit a libero viverra porta non eu justo. Vivamus mollis metus sem, ac sodales dui lobortis. Pellentesque sit amet velit a libero viverra porta non eu justo. Vivamus mollis metus sem, ac sodales dui lobortis.</p>
-                        </div>
-                    </div>
-
-                    <!-- Single Post Start -->
-                    <div class="single-blog-post mb-100 wow fadeInUp" data-wow-delay="100ms">
-                        <!-- Post Thumb -->
-                        <div class="blog-post-thumb mt-30">
-                            <a href="#"><img src="img/bg-img/blog2.jpg" alt=""></a>
-                            <!-- Post Date -->
-                            <div class="post-date">
-                                <span>15</span>
-                                <span>June ‘18</span>
-                            </div>
-                        </div>
-
-                        <!-- Blog Content -->
-                        <div class="blog-content">
-                            <!-- Post Title -->
-                            <a href="#" class="post-title">5 Festivals you shouldn’t miss this summer</a>
-                            <!-- Post Meta -->
-                            <div class="post-meta d-flex mb-30">
-                                <p class="post-author">By<a href="#"> Admin</a></p>
-                                <p class="tags">in<a href="#"> Events</a></p>
-                                <p class="tags"><a href="#">2 Comments</a></p>
-                            </div>
-                            <!-- Post Excerpt -->
-                            <p>Pellentesque sit amet velit a libero viverra porta non eu justo. Vivamus mollis metus sem, ac sodales dui lobortis. Pellentesque sit amet velit a libero viverra porta non eu justo. Vivamus mollis metus sem, ac sodales dui lobortis.</p>
-                        </div>
-                    </div>
-
-                    <!-- Single Post Start -->
-                    <div class="single-blog-post mb-100 wow fadeInUp" data-wow-delay="100ms">
-                        <!-- Post Thumb -->
-                        <div class="blog-post-thumb mt-30">
-                            <a href="#"><img src="img/bg-img/blog3.jpg" alt=""></a>
-                            <!-- Post Date -->
-                            <div class="post-date">
-                                <span>15</span>
-                                <span>June ‘18</span>
-                            </div>
-                        </div>
-
-                        <!-- Blog Content -->
-                        <div class="blog-content">
-                            <!-- Post Title -->
-                            <a href="#" class="post-title">5 Festivals you shouldn’t miss this summer</a>
-                            <!-- Post Meta -->
-                            <div class="post-meta d-flex mb-30">
-                                <p class="post-author">By<a href="#"> Admin</a></p>
-                                <p class="tags">in<a href="#"> Events</a></p>
-                                <p class="tags"><a href="#">2 Comments</a></p>
-                            </div>
-                            <!-- Post Excerpt -->
-                            <p>Pellentesque sit amet velit a libero viverra porta non eu justo. Vivamus mollis metus sem, ac sodales dui lobortis. Pellentesque sit amet velit a libero viverra porta non eu justo. Vivamus mollis metus sem, ac sodales dui lobortis.</p>
-                        </div>
-                    </div>
-
-                    <!-- Pagination -->
-                    <div class="oneMusic-pagination-area wow fadeInUp" data-wow-delay="300ms">
-                        <nav>
-                            <ul class="pagination">
-                                <li class="page-item active"><a class="page-link" href="#">01</a></li>
-                                <li class="page-item"><a class="page-link" href="#">02</a></li>
-                                <li class="page-item"><a class="page-link" href="#">03</a></li>
-                            </ul>
-                        </nav>
-                    </div>
+        <div class="row text-center">
+            <div class="col-md-4 mb-4">
+                <div class="p-4 border rounded shadow-sm h-100">
+                    <i class="fa fa-music fa-2x mb-2 about-icon"></i>
+                    <h5>Our Mission</h5>
+                    <p><?= htmlspecialchars($mission) ?></p>
                 </div>
-
-                <div class="col-12 col-lg-3">
-                    <div class="blog-sidebar-area">
-
-                        <!-- Widget Area -->
-                        <div class="single-widget-area mb-30">
-                            <div class="widget-title">
-                                <h5>Categories</h5>
-                            </div>
-                            <div class="widget-content">
-                                <ul>
-                                    <li><a href="#">Music</a></li>
-                                    <li><a href="#">Events &amp; Press</a></li>
-                                    <li><a href="#">Festivals</a></li>
-                                    <li><a href="#">Lyfestyle</a></li>
-                                    <li><a href="#">Uncategorized</a></li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <!-- Widget Area -->
-                        <div class="single-widget-area mb-30">
-                            <div class="widget-title">
-                                <h5>Archive</h5>
-                            </div>
-                            <div class="widget-content">
-                                <ul>
-                                    <li><a href="#">February 2018</a></li>
-                                    <li><a href="#">March 2018</a></li>
-                                    <li><a href="#">April 2018</a></li>
-                                    <li><a href="#">May 2018</a></li>
-                                    <li><a href="#">June 2018</a></li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <!-- Widget Area -->
-                        <div class="single-widget-area mb-30">
-                            <div class="widget-title">
-                                <h5>Tags</h5>
-                            </div>
-                            <div class="widget-content">
-                                <ul class="tags">
-                                    <li><a href="#">music</a></li>
-                                    <li><a href="#">events</a></li>
-                                    <li><a href="#">artists</a></li>
-                                    <li><a href="#">press</a></li>
-                                    <li><a href="#">mp3</a></li>
-                                    <li><a href="#">videos</a></li>
-                                    <li><a href="#">concerts</a></li>
-                                    <li><a href="#">performers</a></li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <!-- Widget Area -->
-                        <div class="single-widget-area mb-30">
-                            <a href="#"><img src="img/bg-img/add.gif" alt=""></a>
-                        </div>
-
-                        <!-- Widget Area -->
-                        <div class="single-widget-area mb-30">
-                            <a href="#"><img src="img/bg-img/add2.gif" alt=""></a>
-                        </div>
-
-                    </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="p-4 border rounded shadow-sm h-100">
+                    <i class="fa fa-bullseye fa-2x mb-2 about-icon"></i>
+                    <h5>Our Vision</h5>
+                    <p><?= htmlspecialchars($vision) ?></p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="p-4 border rounded shadow-sm h-100">
+                    <i class="fa fa-users fa-2x mb-2 about-icon"></i>
+                    <h5>Our Values</h5>
+                    <p><?= htmlspecialchars($value) ?></p>
                 </div>
             </div>
         </div>
     </div>
-    <!-- ##### Blog Area End ##### -->
+</section>
+<!-- ##### About Area End ##### -->
+
+
+    <!-- ##### Blog Area Start ##### -->
+<div class="blog-area section-padding-100">
+    <div class="container">
+        <div class="row">
+            <!-- Main Blog Content -->
+            <div class="col-12 col-lg-9">
+
+                <!-- Blog Post -->
+                <div class="single-blog-post mb-100 wow fadeInUp" data-wow-delay="100ms">
+                    <div class="blog-post-thumb mt-20 position-relative">
+                        <a href="#"><img src="img/bg-img/blog1.jpg" alt="Festival Highlights"></a>
+                        <div class="post-date text-white bg-danger text-center px-2 py-1 position-absolute top-0 start-0">
+                            <span class="d-block fs-4">28</span>
+                            <small>July '25</small>
+                        </div>
+                    </div>
+                    <div class="blog-content">
+                        <a href="#" class="post-title fs-3 fw-bold text-dark">🎉 Top 5 Summer Music Festivals You Can’t Miss</a>
+                        <div class="post-meta d-flex gap-3 mb-3 mt-2">
+                            <p class="post-author text-muted">By <a href="#" class="text-decoration-none">Sound Team</a></p>
+                            <p class="tags text-muted">in <a href="#" class="text-decoration-none">Festivals</a></p>
+                            <p class="tags text-muted"><a href="#" class="text-decoration-none"></a></p>
+                        </div>
+                        <p>From Coachella vibes to Tomorrowland beats, dive into the biggest and most unforgettable music festivals happening this summer.</p>
+                    </div>
+                </div>
+
+                <!-- Blog Post -->
+                <div class="single-blog-post mb-100 wow fadeInUp" data-wow-delay="200ms">
+                    <div class="blog-post-thumb mt-20 position-relative">
+                        <a href="#"><img src="img/bg-img/blog2.jpg" alt="New Artist Drop"></a>
+                        <div class="post-date text-white bg-danger text-center px-2 py-1 position-absolute top-0 start-0">
+                            <span class="d-block fs-4">21</span>
+                            <small>July '25</small>
+                        </div>
+                    </div>
+                    <div class="blog-content">
+                        <a href="#" class="post-title fs-3 fw-bold text-dark">🎤 Rising Stars: 3 New Artists Dropping Fire Tracks</a>
+                        <div class="post-meta d-flex gap-3 mb-3 mt-2">
+                            <p class="post-author text-muted">By <a href="#" class="text-decoration-none">Admin</a></p>
+                            <p class="tags text-muted">in <a href="#" class="text-decoration-none">New Artists</a></p>
+                            <p class="tags text-muted"><a href="#" class="text-decoration-none"></a></p>
+                        </div>
+                        <p>Get to know the breakthrough performers shaking up the charts and setting the stage on fire this season.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Sidebar Widgets -->
+            <div class="col-12 col-lg-3">
+                <div class="blog-sidebar-area">
+
+                    <!-- Categories -->
+                    <div class="single-widget-area mb-30">
+                        <div class="widget-title">
+                            <h5>Categories</h5>
+                        </div>
+                        <div class="widget-content">
+                            <ul>
+                                <li><a href="#">🎶 Music News</a></li>
+                                <li><a href="#">🎤 Artist Spotlights</a></li>
+                                <li><a href="#">🎧 New Releases</a></li>
+                                <li><a href="#">📅 Events</a></li>
+                                <li><a href="#">📰 Press</a></li>
+                                <li><a href="#">🎧 Concert</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+
+                    <!-- Tags -->
+                    <div class="single-widget-area mb-30">
+                        <div class="widget-title">
+                            <h5>Trending Tags</h5>
+                        </div>
+                        <div class="widget-content">
+                            <ul class="tags">
+                                <li><a href="#">#music</a></li>
+                                <li><a href="#">#live</a></li>
+                                <li><a href="#">#behindthescenes</a></li>
+                                <li><a href="#">#artistspotlight</a></li>
+                                <li><a href="#">#newdrops</a></li>
+                                <li><a href="#">#video</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Ads -->
+                    <div class="single-widget-area mb-50">
+                        <a href="#"><img src="img/bg-img/add.gif" alt="Ad Banner"></a>
+                    </div>
+                    <div class="single-widget-area mt-50">
+                        <a href="#"><img src="img/bg-img/add2.gif" alt="Ad Banner 2"></a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ##### Blog Area End ##### -->
+
 
     <!-- ##### Contact Area Start ##### -->
     <section class="contact-area section-padding-100 bg-img bg-overlay bg-fixed has-bg-img" style="background-image: url(img/bg-img/bg-2.jpg);">

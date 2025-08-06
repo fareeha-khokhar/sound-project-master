@@ -109,7 +109,8 @@
 
   <head>
     <meta charset="UTF-8">
-    <title>📁 Media Library</title>
+    <link rel="icon" type="image/png" href="../../../img/core-img/favicon.ico" />
+  <title>Sound Dashboard </title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="../assets/css/soft-ui-dashboard-tailwind.css?v=1.0.5" rel="stylesheet" />
   </head>
@@ -127,16 +128,39 @@
             <!-- navbar end -->
       <h2 class="text-3xl font-bold text-fuchsia-500 mb-6 text-center">📁 Media Library</h2>
 
-      <form method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-        <input type="text" name="title" placeholder="Search Title" value="<?= htmlspecialchars($_GET['title'] ?? '') ?>" class="p-3 focus:shadow-soft-primary-outline ease-soft w-1/100 leading-5.6 relative -ml-px block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 pr-3 text-gray-700 transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none focus:transition-shadow">
-        <select name="media_type" class="p-3 focus:shadow-soft-primary-outline ease-soft w-1/100 leading-5.6 relative -ml-px block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 pr-3 text-gray-700 transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none focus:transition-shadow">
-          <option value="">All Types</option>
-          <option value="audio" <?= (@$_GET['media_type'] == 'audio') ? 'selected' : '' ?>>Audio</option>
-          <option value="video" <?= (@$_GET['media_type'] == 'video') ? 'selected' : '' ?>>Video</option>
-        </select>
-        <input type="number" name="release_year" placeholder="Year" value="<?= htmlspecialchars($_GET['release_year'] ?? '') ?>" class="p-3 focus:shadow-soft-primary-outline ease-soft w-1/100 leading-5.6 relative -ml-px block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 pr-3 text-gray-700 transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none focus:transition-shadow">
-        <button class="bg-fuchsia-500 text-white px-4 py-2 rounded hover:bg-fuchsia-600">Search</button>
-      </form>
+      <form method="GET" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8 px-4">
+  <input
+    type="text"
+    name="title"
+    placeholder="Search Title"
+    value="<?= htmlspecialchars($_GET['title'] ?? '') ?>"
+    class="w-full p-3 rounded-lg border border-gray-300 bg-white text-gray-700 placeholder-gray-500 focus:outline-none focus:border-fuchsia-300"
+  />
+
+  <select
+    name="media_type"
+    class="w-full p-3 rounded-lg border border-gray-300 bg-white text-gray-700 placeholder-gray-500 focus:outline-none focus:border-fuchsia-300"
+  >
+    <option value="">All Types</option>
+    <option value="audio" <?= (@$_GET['media_type'] == 'audio') ? 'selected' : '' ?>>Audio</option>
+    <option value="video" <?= (@$_GET['media_type'] == 'video') ? 'selected' : '' ?>>Video</option>
+  </select>
+
+  <input
+    type="number"
+    name="release_year"
+    placeholder="Year"
+    value="<?= htmlspecialchars($_GET['release_year'] ?? '') ?>"
+    class="w-full p-3 rounded-lg border border-gray-300 bg-white text-gray-700 placeholder-gray-500 focus:outline-none focus:border-fuchsia-300"
+  />
+
+  <button
+    class="w-full bg-fuchsia-500 text-white px-4 py-3 rounded-lg hover:bg-fuchsia-600 transition-all"
+  >
+    Search
+  </button>
+</form>
+
       <section class="px-4 pb-8">
         <?php if (count($mediaList) === 0): ?>
           <div class="text-center text-gray-500">No media found.</div>
@@ -146,8 +170,8 @@
               <div class="bg-white rounded-xl shadow-md p-4 border border-gray-200">
                 <img src="../../<?= $media['thumbnail_path'] ?>" class="w-full h-40 object-cover rounded mb-3">
                 <h3 class="font-bold text-lg"><?= htmlspecialchars($media['title']) ?></h3>
-                <p class="text-sm text-gray-600">🎤 <?= $media['artist'] ?> | 🌐 <?= $media['language'] ?> | 📅 <?= $media['release_year'] ?></p>
-                <p class="text-sm text-gray-600 mb-2">🎧 <?= strtoupper($media['media_type']) ?></p>
+                <p class="text-sm text-gray-600"> <?= $media['artist'] ?> |  <?= $media['language'] ?> |  <?= $media['release_year'] ?></p>
+                <p class="text-sm text-gray-600 mb-2"> <?= strtoupper($media['media_type']) ?></p>
 
                 <?php if ($media['media_type'] === 'audio'): ?>
                   <audio controls class="w-full mt-2">

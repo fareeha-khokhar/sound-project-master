@@ -80,7 +80,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
                                     <label for="password">Password</label>
                                     <input type="password" class="form-control" name="password" id="password" required placeholder="Password">
                                 </div>
-                                <button type="submit" name="submit" class="btn oneMusic-btn mt-30">Register <i class="fa fa-angle-double-right"></i></button>
+                                <button type="submit" name="submit" class="btn oneMusic-btn mt-30 border border-dark w-100">
+                                    Register <i class="fa fa-angle-double-right"></i>
+                                </button>
                                 <p class="mt-1 text-center">
                                     Already have an account?
                                     <a href="login.php" class="text-danger font-weight-bold">Login</a>
