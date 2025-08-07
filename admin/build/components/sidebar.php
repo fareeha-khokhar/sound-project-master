@@ -154,12 +154,38 @@
           <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Media Library</span>
         </a>
       </li>
+      
 
       <li class="w-full mt-4">
         <h6
           class="pl-6 ml-2 font-bold leading-tight uppercase text-xs opacity-60">
           Content
         </h6>
+      </li>
+      
+      <li class="mt-0.5 w-full">
+        <a
+          class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors"
+          href="../pages/addevent.php">
+          <div
+            class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
+            <svg
+              width="20px"
+              height="20px"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <path
+                class="fill-slate-800"
+                d="M8 7V3M16 7V3M3 11H21M5 5H19C20.1 5 21 5.9 21 7V19C21 20.1 20.1 21 19 21H5C3.9 21 3 20.1 3 19V7C3 5.9 3.9 5 5 5ZM12 17V14M12 14H9M12 14H15"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </div>
+          <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Upcoming Events</span>
+        </a>
       </li>
 
       <li class="mt-0.5 w-full">

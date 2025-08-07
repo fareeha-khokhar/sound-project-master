@@ -1,3 +1,38 @@
+<?php
+include 'admin/build/components/connection.php'; // Your DB connection
+
+if (isset($_GET['id'])) {
+    $id = intval($_GET['id']); // Sanitize the ID
+
+    $stmt = $conn->prepare("SELECT title, artist, genre, release_year, media_type, media_path, created_at, description, thumbnail_path FROM media_library WHERE id = ?");
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $stmt->store_result();
+
+    if ($stmt->num_rows > 0) {
+        $stmt->bind_result($title, $artist, $genre, $release_year, $media_type, $media_path, $created_at, $description, $thumbnail_path);
+        $stmt->fetch();
+    } else {
+        echo "<div class='alert alert-danger'>Video not found.</div>";
+        exit;
+    }
+
+    $stmt->close();
+} else {
+    echo "<div class='alert alert-warning'>No video ID specified.</div>";
+    exit;
+}
+
+?>
+<?php
+// Fetch latest videos excluding current one
+$side_stmt = $conn->prepare("SELECT id, title, artist, thumbnail_path FROM media_library WHERE media_type = 'video' AND id != ? ORDER BY id DESC LIMIT 5");
+$side_stmt->bind_param("i", $id); // $id is already available from above
+$side_stmt->execute();
+$side_stmt->bind_result($sid, $stitle, $sartist, $sthumb);
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -43,15 +78,6 @@
             cursor: pointer;
         }
 
-        .dropdown-menu {
-            background-color: #411b1bff;
-            color: white;
-        }
-
-        .dropdown-item:hover {
-            background-color: #333;
-        }
-
         .comment-box {
             background: #202020;
             border-radius: 8px;
@@ -59,11 +85,6 @@
             margin-bottom: 10px;
         }
 
-        .sidebar-video img {
-            border-radius: 8px;
-            width: 30%;
-            height: 100px;
-        }
 
         .sidebar-video-title {
             font-size: 14px;
@@ -88,15 +109,6 @@
             display: none;
             margin-top: 5px;
         }
-
-        #commentInput {
-            background: #202020;
-            border: none;
-            color: #fff;
-            width: 100%;
-            padding: 12px;
-            border-radius: 10px;
-        }
     </style>
 </head>
 
@@ -113,108 +125,72 @@
             <!-- Main Video Section -->
             <div class="col-lg-12 ">
                 <div class="video-container p-3">
-                    <video id="mainVideo" poster="https://via.placeholder.com/800x400" controls>
-                        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                    <video id="mainVideo" poster="admin/<?= htmlspecialchars($thumbnail_path) ?>" controls>
+                        <source src="admin/<?= htmlspecialchars($media_path) ?>" type="video/mp4">
+                        Your browser does not support the video tag.
                     </video>
-                    <!-- <div class="controls">
-                        <button class="control-btn" id="playPause"><i class="fa fa-play"></i></button>
-                        <div class="dropdown">
-
-                        </div>
-                    </div> -->
                 </div>
 
-                <span class="mt-2 h1">THIS WAS MY WORST IDEA EVER 😭</span><br>
-                <span>17,303 views • 1 hour ago</span>
+                <span class="mt-2 h1"><?= htmlspecialchars($title) ?> | <?= htmlspecialchars($artist) ?></span><br>
+                <span><?= htmlspecialchars($genre) ?> • <?= htmlspecialchars($release_year) ?> • <?= date("F j, Y", strtotime($created_at)) ?></span>
+
 
                 <!-- Channel Info -->
                 <div class="channel-info mb-3">
-                    <img src="img/bg-img/a2.jpg" alt="Channel Icon">
+                    <img src="admin/<?= htmlspecialchars($thumbnail_path) ?>" alt="Channel Icon">
                     <div>
-                        <strong>Denitslava </strong><br>
-                        <small>8.09M subscribers</small>
+                        <strong><?= htmlspecialchars($artist) ?></strong><br>
+                        <small>Music Video</small>
                     </div>
-                    <button class="btn btn-danger btn-sm ms-auto me-5">Subscribe</button>
+
+                    <button class="btn btn-danger btn-sm ms-auto me-5"><a href="event.php#feedback">Leave Feedback</a></button>
                 </div>
 
                 <!-- Short Description -->
                 <div id="shortDesc">
-                    😀 Subscribe to my channel! <br>
-                    🎮 DO MY MAKEUP video/game: link <br>
+                    <p class="text-white">
+                        😀 Must Leave a Feedback! <br>
+                    Name your Fav Track if it isn't avaible on Sound Entertainment. <br>
+                    </p>
                     <span style="cursor:pointer;color:#3ea6ff;" onclick="showFullDesc()">...more</span>
                 </div>
                 <div id="fullDesc">
-                    😀 Subscribe to my channel! http://bit.ly/2hjbrRN<br>
-                    🎮 DO MY MAKEUP video/game: https://goo.gl/Okennf<br>
-                    📌 Check out my SECOND Channel: https://goo.gl/WJCHNy
+                    <p>
+                        <a href="login.php" class="text-white text-decoration-none">😀 Login TO Stay Vibin' </a><br>
+                    <a href="event.php" class="text-white text-decoration-none">📌 WE Also Host Event Grab Your Tickets For Upcoming Event.</a>
+                    </p>
                 </div>
 
             </div>
-            <div class="col-lg-8">
-                <!-- Comment Input -->
-                <div class="mt-3 mb-3">
-                    <input type="text" id="commentInput" placeholder="Add a comment...">
 
-                </div>
 
-                <!-- Comments -->
-                <span class="mt-3 h2">Comments</span>
-                <div class="comment-box mt-3"><strong>User1:</strong> Finally, Deni is BACKKK ❤️</div>
-                <div class="comment-box"><strong>User2:</strong> HOW DARE YOUTUBE HIDE THIS FROM ME! ❤️</div>
-                <div class="comment-box"><strong>User3:</strong> Your humor is always the best, Deni!</div>
+            <!-- more Videos -->
+            <div class="col-lg-12 p-5">
+                <span class="h2 mb-4">Vibe ON Hit MV's</span>
+
+                <?php while ($side_stmt->fetch()): ?>
+                    <div class="sidebar-video d-flex mb-3 mt-4">
+                        <a href="mvplayer.php?id=<?= $sid ?>">
+                            <img src="admin/<?= htmlspecialchars($sthumb) ?>" alt="thumbnail" style="width: 200px !important;">
+                        </a>
+                        <div class="ms-2 flex-grow-1">
+                            <a href="mvplayer.php?id=<?= $sid ?>" class="text-decoration-none text-white">
+                                <div class="sidebar-video-title pe-5">
+                                    <h4 class="text-light"><?= htmlspecialchars($stitle) ?></h4>
+                                </div>
+                                <p class="text-muted"><?= htmlspecialchars($sartist) ?></p>
+                            </a>
+                        </div>
+                        <div class="dropdown">
+                            <a href="event.php#feedback" class="btn btn-sm text-white">
+                                <i class="fa fa-ellipsis-vertical"></i>
+                            </a>
+                        </div>
+                    </div>
+                <?php endwhile; ?>
+
             </div>
 
-            <!-- Sidebar Videos -->
-            <div class="col-lg-4">
-                <span class="h2 mb-5">Vibe ON Hit MV's</span>
-                <div class="sidebar-video d-flex mb-3 mt-3">
-                    <img src="img/cover/images.jpg" alt="thumbnail">
-                    <div class="ms-2 flex-grow-1">
-                        <div class="sidebar-video-title">Video 1</div>
-                        <small class="text-muted">6.5M views</small>
-                    </div>
-                    <div class="dropdown">
-                        <button class="btn btn-sm text-white" data-bs-toggle="dropdown"><i class="fa fa-ellipsis-vertical"></i></button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Add to queue</a></li>
-                            <li><a class="dropdown-item" href="#">Save to playlist</a></li>
-                            <li><a class="dropdown-item" href="#">Download</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="sidebar-video d-flex mb-3">
-                    <img src="img/cover/images.jpg" alt="thumbnail">
-                    <div class="ms-2 flex-grow-1">
-                        <div class="sidebar-video-title">Video 2</div>
-                        <small class="text-muted">3.2M views</small>
-                    </div>
-                    <div class="dropdown">
-                        <button class="btn btn-sm text-white" data-bs-toggle="dropdown"><i class="fa fa-ellipsis-vertical"></i></button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Add to queue</a></li>
-                            <li><a class="dropdown-item" href="#">Save to playlist</a></li>
-                            <li><a class="dropdown-item" href="#">Download</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="sidebar-video d-flex mb-3">
-                    <img src="img/cover/images.jpg" alt="thumbnail">
-                    <div class="ms-2 flex-grow-1">
-                        <div class="sidebar-video-title">Video 3</div>
-                        <small class="text-muted">1.1M views</small>
-                    </div>
-                    <div class="dropdown">
-                        <button class="btn btn-sm text-white" data-bs-toggle="dropdown"><i class="fa fa-ellipsis-vertical"></i></button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Add to queue</a></li>
-                            <li><a class="dropdown-item" href="#">Save to playlist</a></li>
-                            <li><a class="dropdown-item" href="#">Download</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
     <!-- ##### Footer Area Start ##### -->

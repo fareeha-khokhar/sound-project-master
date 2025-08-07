@@ -1,5 +1,9 @@
 <?php 
 include '../components/connection.php';
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+    header("Location: ../../../index.php");
+    exit(); // Important to stop script execution after redirect
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = $_POST['title'];

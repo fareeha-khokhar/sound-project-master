@@ -78,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="single-event-area mb-30">
                                 <div class="event-thumbnail">
-                                    <img src="admin/<?= htmlspecialchars($event['image_path']) ?>" alt="Event Image">
+                                    <img src="admin/<?= htmlspecialchars($event['image_path']) ?>" alt="Event Image" style="height: 350px !important;" class="img-fluid"> 
                                 </div>
                                 <div class="event-text">
                                     <h4><?= htmlspecialchars($event['title']) ?></h4>
@@ -114,7 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     </section>
 
     <!-- Newsletter & Testimonials -->
-    <section class="newsletter-testimonials-area">
+    <section class="newsletter-testimonials-area" id="feedback">
         <div class="container">
             <div class="row">
 

@@ -1,8 +1,12 @@
 <?php
 include "admin/build/components/connection.php";
-// if(isset($_SESSION['id'])){
-//   header("location:index.php");
-// }
+if (isset($_SESSION['id'])) {
+    echo "<script>
+        alert('You\'re already logged in.');
+        window.location.href = 'index.php';
+    </script>";
+    exit();
+}
 ?>
 
 <?php

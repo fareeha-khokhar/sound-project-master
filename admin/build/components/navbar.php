@@ -64,11 +64,10 @@
                   class="block px-0 py-2 font-semibold transition-all ease-nav-brand text-sm text-slate-500"
                 >
                   <i class="fa fa-user sm:mr-1"></i>
-                  <span class="hidden sm:inline">Sign In</span>
                 </a>
                 <a
                   href="logout.php"
-                  class="block px-0 py-2 font-semibold transition-all ease-nav-brand text-sm text-slate-500"
+                  class="inline-block px-6 py-2 mb-0 mr-0 font-bold text-center uppercase align-middle transition-all bg-transparent border border-solid rounded-lg shadow-none cursor-pointer leading-pro border-fuchsia-500 ease-soft-in text-xs hover:scale-102 active:shadow-soft-xs text-fuchsia-500 hover:border-fuchsia-500 active:bg-fuchsia-500 active:hover:text-fuchsia-500 hover:text-fuchsia-500 tracking-tight-soft hover:bg-transparent hover:opacity-75 hover:shadow-none active:text-white active:hover:bg-transparent"
                 >
                   <i class="fa fa-user sm:mr-1"></i>
                   <span class="hidden sm:inline">Logout</span>

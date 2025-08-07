@@ -38,7 +38,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title -->
-    <title>Sound Entertainment</title>
+    <title>Sound - Home</title>
+
+    <!-- font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-RXf+QSDCUQs6N35J5Z9z9XljI+1fNybzUYVZTjR5mFRDc6aHoq3Gq1M+oSn6d/mNf1N1fGz2VZk89Y5QnFwH0A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Favicon -->
     <link rel="icon" href="img/core-img/favicon.ico">
@@ -46,10 +49,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css">
 
+    <!-- animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
 
+
 </head>
+
 
 <body>
     <!-- Preloader -->
@@ -84,33 +92,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
                 <div class="col-12 col-lg-3">
                     <div class="contact-content mb-100">
                         <!-- Title -->
-                        <div class="contact-title mb-50">
-                            <h5>Contact Info</h5>
+                        <div class="contact-title mb-30">
+                            <h4>CONTACT INFORMATION</h4>
                         </div>
 
                         <!-- Single Contact Info -->
-                        <div class="single-contact-info d-flex align-items-center">
+                        <div class="single-contact-info d-flex align-items-center mb-50">
                             <div class="icon mr-30">
                                 <span class="icon-placeholder"></span>
                             </div>
-                            <p>1481 Creekside Lane Avila Beach, CA 931</p>
+                            <p>Office #23, Sunrise Mall, Gulshan-e-Iqbal, Karachi, Pakistan</p>
                         </div>
 
                         <!-- Single Contact Info -->
-                        <div class="single-contact-info d-flex align-items-center">
+                        <div class="single-contact-info d-flex align-items-center mb-50">
                             <div class="icon mr-30">
                                 <span class="icon-smartphone"></span>
                             </div>
-                            <p>+53 345 7953 32453</p>
+                            <p>+92 312 3456789</p>
                         </div>
 
                         <!-- Single Contact Info -->
-                        <div class="single-contact-info d-flex align-items-center">
+                        <div class="single-contact-info d-flex align-items-center mb-50">
                             <div class="icon mr-30">
                                 <span class="icon-mail"></span>
                             </div>
-                            <p>yourmail@gmail.com</p>
+                            <p>fareehafatimakhokhar2004</p>
                         </div>
+
+
 
                         <!-- Contact Social Info -->
                         <div class="contact-social-info mt-50">
@@ -128,10 +138,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
                 <div class="col-12 col-lg-9">
                     <!-- ##### Google Maps ##### -->
                     <div class="map-area mb-100">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d22236.40558254599!2d-118.25292394686001!3d34.057682914027104!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2c75ddc27da13%3A0xe22fdf6f254608f4!2z4Kay4Ka4IOCmj-CmnuCnjeCmnOCnh-CmsuCnh-CmuCwg4KaV4KeN4Kav4Ka-4Kay4Ka_4Kar4KeL4Kaw4KeN4Kao4Ka_4Kav4Ka84Ka-LCDgpq7gpr7gprDgp43gppXgpr_gpqgg4Kav4KeB4KaV4KeN4Kak4Kaw4Ka-4Ka34KeN4Kaf4KeN4Kaw!5e0!3m2!1sbn!2sbd!4v1532328708137" allowfullscreen></iframe>
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d28946.158779634937!2d67.0657349!3d24.9262944!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3eb33fef18c579b1%3A0x87e4e5cc889ec61f!2sGulshan-e-Iqbal%2C%20Karachi%2C%20Pakistan!5e0!3m2!1sen!2s!4v1661279438301"
+                            style="border:0;"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>

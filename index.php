@@ -1,21 +1,37 @@
 <?php
 include 'admin/build/components/connection.php'; // adjust path as needed
 
-// Fetch latest 7 audio songs
-$stmt = $conn->prepare("SELECT title, artist, thumbnail_path, created_at FROM media_library WHERE media_type = 'audio' ORDER BY created_at DESC LIMIT 7");
+// Fetch latest 10 audio songs
+$stmt = $conn->prepare("SELECT title, artist, thumbnail_path FROM media_library WHERE media_type = 'audio' ORDER BY created_at DESC LIMIT 10");
 $stmt->execute();
-$stmt->bind_result($title, $artist, $thumbnail_path, $created_at);
+$stmt->bind_result($title, $artist, $thumbnail_path);
 
 $latestSongs = [];
 while ($stmt->fetch()) {
     $latestSongs[] = [
         'title' => $title,
         'artist' => $artist,
-        'thumbnail_path' => $thumbnail_path,
-        'created_at' => $created_at
+        'thumbnail_path' => $thumbnail_path
     ];
 }
+$stmt->close();
+
+$stmt = $conn->prepare("SELECT id, title, artist, thumbnail_path FROM media_library WHERE media_type = 'video' ORDER BY created_at DESC LIMIT 6");
+$stmt->execute();
+$stmt->bind_result($id, $vTitle, $vArtist, $vThumbnail);
+
+$latestVideos = [];
+while ($stmt->fetch()) {
+    $latestVideos[] = [
+        'id' => $id,
+        'title' => $vTitle,
+        'artist' => $vArtist,
+        'thumbnail_path' => $vThumbnail
+    ];
+}
+
 ?>
+
 
 
 <!DOCTYPE html>
@@ -131,37 +147,37 @@ while ($stmt->fetch()) {
             </div>
 
             <div class="row">
-               <div class="col-12">
-    <div class="albums-slideshow owl-carousel">
-        <?php
-        $stmt = $conn->prepare("SELECT title, artist, thumbnail_path FROM media_library WHERE media_type = 'audio' ORDER BY created_at DESC LIMIT 10");
-        $stmt->execute();
-        $stmt->bind_result($title, $artist, $thumbnail_path);
+                <div class="col-12">
+                    <div class="albums-slideshow owl-carousel">
+                        <?php
+                        $stmt = $conn->prepare("SELECT title, artist, thumbnail_path FROM media_library WHERE media_type = 'audio' ORDER BY created_at DESC LIMIT 10");
+                        $stmt->execute();
+                        $stmt->bind_result($title, $artist, $thumbnail_path);
 
-        while ($stmt->fetch()):
-        ?>
-            <div class="single-album">
-                <div class="position-relative" style="height: 200px; overflow: hidden;">
-                    <!-- Album Image -->
-                    <img src="admin/<?= htmlspecialchars($thumbnail_path) ?>" alt="<?= htmlspecialchars($title) ?>" class="w-100 h-100" style="object-fit: cover;">
+                        while ($stmt->fetch()):
+                        ?>
+                            <div class="single-album">
+                                <div class="position-relative" style="height: 200px; overflow: hidden;">
+                                    <!-- Album Image -->
+                                    <img src="admin/<?= htmlspecialchars($thumbnail_path) ?>" alt="<?= htmlspecialchars($title) ?>" class="w-100 h-100" style="object-fit: cover;">
 
-                    <!-- New Badge inside image -->
-                    <span class="position-absolute top-0 end-0 m-2 badge bg-danger">
-                        New
-                    </span>
+                                    <!-- New Badge inside image -->
+                                    <span class="position-absolute top-0 end-0 m-2 badge bg-danger">
+                                        New
+                                    </span>
+                                </div>
+
+                                <!-- Album Info -->
+                                <div class="album-info">
+                                    <a href="#">
+                                        <h5><?= htmlspecialchars($title) ?></h5>
+                                    </a>
+                                    <p><?= htmlspecialchars($artist) ?></p>
+                                </div>
+                            </div>
+                        <?php endwhile; ?>
+                    </div>
                 </div>
-
-                <!-- Album Info -->
-                <div class="album-info">
-                    <a href="#">
-                        <h5><?= htmlspecialchars($title) ?></h5>
-                    </a>
-                    <p><?= htmlspecialchars($artist) ?></p>
-                </div>
-            </div>
-        <?php endwhile; ?>
-    </div>
-</div>
 
             </div>
         </div>
@@ -169,236 +185,51 @@ while ($stmt->fetch()) {
     <!-- ##### Latest Albums Area End ##### -->
 
 
-    <!-- ##### lastest mV's Area Start ##### -->
+    <!-- ##### Latest MV's Area Start ##### -->
     <section class="oneMusic-buy-now-area has-fluid bg-gray section-padding-100">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
                     <div class="section-heading style-2">
                         <p>See what’s new</p>
-                        <h2>latest MV’s</h2>
+                        <h2>Latest MV’s</h2>
                     </div>
                 </div>
             </div>
 
             <div class="row">
+                <?php foreach ($latestVideos as $index => $video): ?>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                        <div class="single-album-area wow fadeInUp"
+                            data-wow-delay="<?= (100 + ($index * 100)) % 700 ?>ms"
+                            style="cursor: pointer;"
+                            onclick="window.location.href='mvplayer.php?id=<?= $video['id'] ?>'">
 
-                <!-- Single Album Area -->
-                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-                    <div class="single-album-area wow fadeInUp" data-wow-delay="100ms">
-                        <div class="album-thumb">
-                            <img src="img/bg-img/b1.jpg" alt="">
-                            <!-- Album Price -->
-                            <div class="album-price">
-                                <p>$0.90</p>
+                            <div class="album-thumb">
+                                <img src="admin/<?= htmlspecialchars($video['thumbnail_path']) ?>" alt="<?= htmlspecialchars($video['title']) ?>">
                             </div>
-                            <!-- Play Icon -->
-                            <div class="play-icon">
-                                <a href="#" class="video--play--btn"><span class="icon-play-button"></span></a>
-                            </div>
-                        </div>
-                        <div class="album-info">
-                            <a href="#">
-                                <h5>Garage Band</h5>
-                            </a>
-                            <p>Radio Station</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Album Area -->
-                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-                    <div class="single-album-area wow fadeInUp" data-wow-delay="200ms">
-                        <div class="album-thumb">
-                            <img src="img/bg-img/b2.jpg" alt="">
-                        </div>
-                        <div class="album-info">
-                            <a href="#">
-                                <h5>Noises</h5>
-                            </a>
-                            <p>Buble Gum</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Album Area -->
-                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-                    <div class="single-album-area wow fadeInUp" data-wow-delay="300ms">
-                        <div class="album-thumb">
-                            <img src="img/bg-img/b3.jpg" alt="">
-                        </div>
-                        <div class="album-info">
-                            <a href="#">
-                                <h5>Jess Parker</h5>
-                            </a>
-                            <p>The Album</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Album Area -->
-                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-                    <div class="single-album-area wow fadeInUp" data-wow-delay="400ms">
-                        <div class="album-thumb">
-                            <img src="img/bg-img/b4.jpg" alt="">
-                        </div>
-                        <div class="album-info">
-                            <a href="#">
-                                <h5>Noises</h5>
-                            </a>
-                            <p>Buble Gum</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Album Area -->
-                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-                    <div class="single-album-area wow fadeInUp" data-wow-delay="500ms">
-                        <div class="album-thumb">
-                            <img src="img/bg-img/b1.jpg" alt="">
-                            <!-- Album Price -->
-                            <div class="album-price">
-                                <p>$0.90</p>
-                            </div>
-                            <!-- Play Icon -->
-                            <div class="play-icon">
-                                <a href="#" class="video--play--btn"><span class="icon-play-button"></span></a>
+                            <div class="album-info">
+                                <h5><?= htmlspecialchars($video['title']) ?></h5>
+                                <p><?= htmlspecialchars($video['artist']) ?></p>
                             </div>
                         </div>
-                        <div class="album-info">
-                            <a href="#">
-                                <h5>Garage Band</h5>
-                            </a>
-                            <p>Radio Station</p>
-                        </div>
                     </div>
-                </div>
-
-                <!-- Single Album Area -->
-                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-                    <div class="single-album-area wow fadeInUp" data-wow-delay="600ms">
-                        <div class="album-thumb">
-                            <img src="img/bg-img/b2.jpg" alt="">
-                        </div>
-                        <div class="album-info">
-                            <a href="#">
-                                <h5>Noises</h5>
-                            </a>
-                            <p>Buble Gum</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Album Area -->
-                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-                    <div class="single-album-area wow fadeInUp" data-wow-delay="100ms">
-                        <div class="album-thumb">
-                            <img src="img/bg-img/b3.jpg" alt="">
-                        </div>
-                        <div class="album-info">
-                            <a href="#">
-                                <h5>Jess Parker</h5>
-                            </a>
-                            <p>The Album</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Album Area -->
-                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-                    <div class="single-album-area wow fadeInUp" data-wow-delay="200ms">
-                        <div class="album-thumb">
-                            <img src="img/bg-img/b4.jpg" alt="">
-                        </div>
-                        <div class="album-info">
-                            <a href="#">
-                                <h5>Noises</h5>
-                            </a>
-                            <p>Buble Gum</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Album Area -->
-                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-                    <div class="single-album-area wow fadeInUp" data-wow-delay="300ms">
-                        <div class="album-thumb">
-                            <img src="img/bg-img/b1.jpg" alt="">
-                            <!-- Album Price -->
-                            <div class="album-price">
-                                <p>$0.90</p>
-                            </div>
-                            <!-- Play Icon -->
-                            <div class="play-icon">
-                                <a href="#" class="video--play--btn"><span class="icon-play-button"></span></a>
-                            </div>
-                        </div>
-                        <div class="album-info">
-                            <a href="#">
-                                <h5>Garage Band</h5>
-                            </a>
-                            <p>Radio Station</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Album Area -->
-                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-                    <div class="single-album-area wow fadeInUp" data-wow-delay="400ms">
-                        <div class="album-thumb">
-                            <img src="img/bg-img/b2.jpg" alt="">
-                        </div>
-                        <div class="album-info">
-                            <a href="#">
-                                <h5>Noises</h5>
-                            </a>
-                            <p>Buble Gum</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Album Area -->
-                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-                    <div class="single-album-area wow fadeInUp" data-wow-delay="500ms">
-                        <div class="album-thumb">
-                            <img src="img/bg-img/b3.jpg" alt="">
-                        </div>
-                        <div class="album-info">
-                            <a href="#">
-                                <h5>Jess Parker</h5>
-                            </a>
-                            <p>The Album</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Album Area -->
-                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-                    <div class="single-album-area wow fadeInUp" data-wow-delay="600ms">
-                        <div class="album-thumb">
-                            <img src="img/bg-img/b4.jpg" alt="">
-                        </div>
-                        <div class="album-info">
-                            <a href="#">
-                                <h5>Noises</h5>
-                            </a>
-                            <p>Buble Gum</p>
-                        </div>
-                    </div>
-                </div>
-
+                <?php endforeach; ?>
             </div>
+
 
             <div class="row">
                 <div class="col-12">
                     <div class="load-more-btn text-center wow fadeInUp" data-wow-delay="300ms">
-                        <a href="#" class="btn oneMusic-btn">Load More <i class="fa fa-angle-double-right"></i></a>
+                        <a href="mv.php" class="btn oneMusic-btn">Load More <i class="fa fa-angle-double-right"></i></a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <!-- ##### lastest mV's Area End ##### -->
+    <!-- ##### Latest MV's Area End ##### -->
+
+
 
     <!-- ##### Upcoming Event Area Start ##### -->
     <section class="featured-artist-area section-padding-100 bg-img bg-overlay bg-fixed" style="background-image: url(img/bg-img/bg-4.jpg);">

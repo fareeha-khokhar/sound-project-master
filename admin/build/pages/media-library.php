@@ -126,7 +126,7 @@
             <!-- navbar start -->
             <?php include '../components/navbar.php' ?>
             <!-- navbar end -->
-      <h2 class="text-3xl font-bold text-fuchsia-500 mb-6 text-center">📁 Media Library</h2>
+      <h2 class="text-3xl font-bold text-fuchsia-500 mb-6 text-center"> Media Library</h2>
 
       <form method="GET" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8 px-4">
   <input

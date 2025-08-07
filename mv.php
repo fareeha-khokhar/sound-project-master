@@ -5,9 +5,9 @@ include 'admin/build/components/connection.php'; // Your DB connection
 <?php
 
 // Fetch all songs
-$stmt = $conn->prepare("SELECT id, title, artist, genre, release_year, media_type, description, thumbnail_path FROM media_library WHERE media_type = 'video' ORDER BY id DESC");
+$stmt = $conn->prepare("SELECT id, title, artist, genre, release_year, media_type, created_at, description, thumbnail_path FROM media_library WHERE media_type = 'video' ORDER BY id DESC");
 $stmt->execute();
-$stmt->bind_result($id, $song_name, $artist_name, $genre, $release_year, $media_type, $lyrics, $thumbnail_path);
+$stmt->bind_result($id, $song_name, $artist_name, $genre, $release_year, $media_type, $time, $lyrics, $thumbnail_path);
 
 ?>
 
@@ -212,43 +212,30 @@ $stmt->bind_result($id, $song_name, $artist_name, $genre, $release_year, $media_
         </div>
     </div>
 
-    <!-- Categories -->
-    <div class="categories ms-5">
-        <button class="active">All</button>
-        <button>Pakistani dramas</button>
-        <button>Music</button>
-        <button>Mixes</button>
-        <button>News</button>
-        <button>Gaming</button>
-        <button>Indian pop music</button>
-        <button>Live</button>
-        <button>Restaurants</button>
-        <button>Kitchens</button>
-        <button>Sketch comedy</button>
-        <button>Television comedy</button>
-    </div>
 
-    <!-- Videos -->
     <div class="container-fluid pt-3">
         <div class="row">
             <?php while ($stmt->fetch()): ?>
-            <div class="col-md-4 col-sm-6 mb-4">
-                <div class="video-card">
-                    <img src="img/bg-img/breadcumb2.jpg" alt="Video Thumbnail" />
-                    <div class="video-info">
-                        <div class="channel-icon">
-                            <img src="img/bg-img/pa2.jpg" alt="Channel Icon">
+                <div class="col-md-4 col-sm-6 mb-4">
+                    <a href="mvplayer.php?id=<?= $id ?>" style="text-decoration: none; color: inherit;">
+                        <div class="video-card">
+                            <img src="admin/<?= htmlspecialchars($thumbnail_path) ?>" alt="Video Thumbnail" style="height: 230px !important;" />
+                            <div class="video-info">
+                                <div class="channel-icon">
+                                    <img src="admin/<?= htmlspecialchars($thumbnail_path) ?>" alt="Channel Icon">
+                                </div>
+                                <div class="video-details">
+                                    <h4><?= htmlspecialchars($song_name) ?> | <?= htmlspecialchars($artist_name) ?></h4>
+                                    <p><?= htmlspecialchars($genre) ?> • <?= htmlspecialchars($release_year) ?> • <?= htmlspecialchars($time) ?></p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="video-details">
-                            <h4><?= htmlspecialchars($song_name) ?> | <?= htmlspecialchars($artist_name) ?></h4>
-                            <p><?= htmlspecialchars($genre) ?> • <?= htmlspecialchars($release_year) ?> • 21 hours ago</p>
-                        </div>
-                    </div>
+                    </a>
                 </div>
-            </div>
             <?php endwhile; ?>
         </div>
     </div>
+
     <!-- ##### Footer Area Start ##### -->
     <?php include '<components/footer.php'; ?>
     <!-- ##### Footer Area Start ##### -->

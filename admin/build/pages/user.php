@@ -1,5 +1,9 @@
 <?php
 include '../components/connection.php'; // Your DB connection
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+    header("Location: ../../../index.php");
+    exit(); // Important to stop script execution after redirect
+}
 ?>
 
 <?php

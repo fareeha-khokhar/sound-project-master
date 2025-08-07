@@ -1,5 +1,9 @@
 <?php
 include '../components/connection.php'; // Your DB connection
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+    header("Location: ../../../index.php");
+    exit(); // Important to stop script execution after redirect
+}
 ?>
 
 <?php
@@ -61,7 +65,7 @@ $stmt->bind_result($id, $song_name, $artist_name, $genre, $release_year, $media_
             <div class="flex-auto px-0 pt-0 pb-2">
               <div class="p-0 overflow-x-auto">
                 <!-- Table UI -->
-                <h6 class="text-xl font-bold mb-4 px-6 pt-6">All Songs</h6>
+                <h6 class="text-xl font-bold mb-4 px-6 pt-6">All Multimedia</h6>
                 <div class="overflow-x-auto px-6 pb-6">
                   <table class="w-full text-sm text-left text-slate-500 border border-slate-200 rounded-xl">
                     <thead class="text-xs uppercase bg-slate-100 text-slate-600">

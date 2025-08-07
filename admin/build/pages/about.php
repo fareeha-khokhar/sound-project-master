@@ -1,5 +1,9 @@
 <?php 
 include '../components/connection.php';
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+    header("Location: ../../../index.php");
+    exit(); // Important to stop script execution after redirect
+}
 
 // Fetch existing data
 $para1 = $para2 = $para3 = $mission = $vision = $value = '';
