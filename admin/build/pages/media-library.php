@@ -110,7 +110,7 @@
   <head>
     <meta charset="UTF-8">
     <link rel="icon" type="image/png" href="../../../img/core-img/favicon.ico" />
-  <title>Sound Dashboard </title>
+    <title>Sound Dashboard </title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="../assets/css/soft-ui-dashboard-tailwind.css?v=1.0.5" rel="stylesheet" />
   </head>
@@ -122,44 +122,40 @@
     <?php include '../components/sidebar.php' ?>
     <!-- sidebar end -->
 
-    <main class="ease-soft-in-out xl:ml-68.5 relative h-full max-h-screen rounded-xl transition-all      duration-200">   
-            <!-- navbar start -->
-            <?php include '../components/navbar.php' ?>
-            <!-- navbar end -->
+    <main class="ease-soft-in-out xl:ml-68.5 relative h-full max-h-screen rounded-xl transition-all      duration-200">
+      <!-- navbar start -->
+      <?php include '../components/navbar.php' ?>
+      <!-- navbar end -->
       <h2 class="text-3xl font-bold text-fuchsia-500 mb-6 text-center"> Media Library</h2>
 
       <form method="GET" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8 px-4">
-  <input
-    type="text"
-    name="title"
-    placeholder="Search Title"
-    value="<?= htmlspecialchars($_GET['title'] ?? '') ?>"
-    class="w-full p-3 rounded-lg border border-gray-300 bg-white text-gray-700 placeholder-gray-500 focus:outline-none focus:border-fuchsia-300"
-  />
+        <input
+          type="text"
+          name="title"
+          placeholder="Search Title"
+          value="<?= htmlspecialchars($_GET['title'] ?? '') ?>"
+          class="w-full p-3 rounded-lg border border-gray-300 bg-white text-gray-700 placeholder-gray-500 focus:outline-none focus:border-fuchsia-300" />
 
-  <select
-    name="media_type"
-    class="w-full p-3 rounded-lg border border-gray-300 bg-white text-gray-700 placeholder-gray-500 focus:outline-none focus:border-fuchsia-300"
-  >
-    <option value="">All Types</option>
-    <option value="audio" <?= (@$_GET['media_type'] == 'audio') ? 'selected' : '' ?>>Audio</option>
-    <option value="video" <?= (@$_GET['media_type'] == 'video') ? 'selected' : '' ?>>Video</option>
-  </select>
+        <select
+          name="media_type"
+          class="w-full p-3 rounded-lg border border-gray-300 bg-white text-gray-700 placeholder-gray-500 focus:outline-none focus:border-fuchsia-300">
+          <option value="">All Types</option>
+          <option value="audio" <?= (@$_GET['media_type'] == 'audio') ? 'selected' : '' ?>>Audio</option>
+          <option value="video" <?= (@$_GET['media_type'] == 'video') ? 'selected' : '' ?>>Video</option>
+        </select>
 
-  <input
-    type="number"
-    name="release_year"
-    placeholder="Year"
-    value="<?= htmlspecialchars($_GET['release_year'] ?? '') ?>"
-    class="w-full p-3 rounded-lg border border-gray-300 bg-white text-gray-700 placeholder-gray-500 focus:outline-none focus:border-fuchsia-300"
-  />
+        <input
+          type="number"
+          name="release_year"
+          placeholder="Year"
+          value="<?= htmlspecialchars($_GET['release_year'] ?? '') ?>"
+          class="w-full p-3 rounded-lg border border-gray-300 bg-white text-gray-700 placeholder-gray-500 focus:outline-none focus:border-fuchsia-300" />
 
-  <button
-    class="w-full bg-fuchsia-500 text-white px-4 py-3 rounded-lg hover:bg-fuchsia-600 transition-all"
-  >
-    Search
-  </button>
-</form>
+        <button
+          class="w-full bg-fuchsia-500 text-white px-4 py-3 rounded-lg hover:bg-fuchsia-600 transition-all">
+          Search
+        </button>
+      </form>
 
       <section class="px-4 pb-8">
         <?php if (count($mediaList) === 0): ?>
@@ -170,7 +166,7 @@
               <div class="bg-white rounded-xl shadow-md p-4 border border-gray-200">
                 <img src="../../<?= $media['thumbnail_path'] ?>" class="w-full h-40 object-cover rounded mb-3">
                 <h3 class="font-bold text-lg"><?= htmlspecialchars($media['title']) ?></h3>
-                <p class="text-sm text-gray-600"> <?= $media['artist'] ?> |  <?= $media['language'] ?> |  <?= $media['release_year'] ?></p>
+                <p class="text-sm text-gray-600"> <?= $media['artist'] ?> | <?= $media['language'] ?> | <?= $media['release_year'] ?></p>
                 <p class="text-sm text-gray-600 mb-2"> <?= strtoupper($media['media_type']) ?></p>
 
                 <?php if ($media['media_type'] === 'audio'): ?>
@@ -220,8 +216,8 @@
       </main>
 
     </main>
-      <!-- main script file  -->
-<script src="../assets/js/soft-ui-dashboard-tailwind.js?v=1.0.5" async></script>
+    <!-- main script file  -->
+    <script src="../assets/js/soft-ui-dashboard-tailwind.js?v=1.0.5" async></script>
     <script>
       function openEditModal(data) {
         document.getElementById('edit_id').value = data.id;

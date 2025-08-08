@@ -1,14 +1,43 @@
 <?php
-include 'admin/build/components/connection.php'; // Your DB connection
-?>
+include 'admin/build/components/connection.php';
 
-<?php
+// AJAX Search Handling
+if (isset($_POST['ajax'])) {
+    $search = $_POST['query'] ?? '';
+    $stmt = $conn->prepare("SELECT id, title, artist, genre, release_year, media_type, created_at, description, thumbnail_path FROM media_library WHERE media_type = 'video' AND title LIKE CONCAT('%', ?, '%') ORDER BY id DESC");
+    $stmt->bind_param("s", $search);
+    $stmt->execute();
+    $stmt->bind_result($id, $song_name, $artist_name, $genre, $release_year, $media_type, $time, $lyrics, $thumbnail_path);
 
-// Fetch all songs
+    $output = '';
+    while ($stmt->fetch()) {
+        $output .= '
+        <div class="col-md-4 col-sm-6 mb-4">
+            <a href="mvplayer.php?id=' . $id . '" style="text-decoration: none; color: inherit;">
+                <div class="video-card">
+                    <img src="admin/' . htmlspecialchars($thumbnail_path) . '" alt="Video Thumbnail" style="height: 230px !important;" />
+                    <div class="video-info">
+                        <div class="channel-icon">
+                            <img src="admin/' . htmlspecialchars($thumbnail_path) . '" alt="Channel Icon">
+                        </div>
+                        <div class="video-details">
+                            <h4>' . htmlspecialchars($song_name) . ' | ' . htmlspecialchars($artist_name) . '</h4>
+                            <p>' . htmlspecialchars($genre) . ' • ' . htmlspecialchars($release_year) . ' • ' . htmlspecialchars($time) . '</p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>';
+    }
+
+    echo $output ?: '<p class="text-white">No results found.</p>';
+    exit;
+}
+
+// Normal Load
 $stmt = $conn->prepare("SELECT id, title, artist, genre, release_year, media_type, created_at, description, thumbnail_path FROM media_library WHERE media_type = 'video' ORDER BY id DESC");
 $stmt->execute();
 $stmt->bind_result($id, $song_name, $artist_name, $genre, $release_year, $media_type, $time, $lyrics, $thumbnail_path);
-
 ?>
 
 <!DOCTYPE html>
@@ -19,18 +48,17 @@ $stmt->bind_result($id, $song_name, $artist_name, $genre, $release_year, $media_
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sound Entertainment - MV</title>
 
-    <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css">
-
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
-
-    <!-- Bootstrap 5 CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sound Entertainment - MV</title>
 
-    <!-- Font Awesome -->
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-
     <style>
         body {
             margin: 0;
@@ -102,34 +130,6 @@ $stmt->bind_result($id, $song_name, $artist_name, $genre, $release_year, $media_
             font-weight: bold;
         }
 
-        .categories {
-            overflow-x: auto;
-            white-space: nowrap;
-            padding: 10px;
-            background-color: #0f0f0f;
-            border-bottom: 1px solid #222;
-        }
-
-        .categories button {
-            background-color: #272727;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            margin-right: 8px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        .categories button.active {
-            background-color: white;
-            color: black;
-        }
-
-        .video-card {
-            background-color: #0f0f0f;
-        }
-
         .video-card img {
             width: 100%;
             border-radius: 10px;
@@ -187,34 +187,31 @@ $stmt->bind_result($id, $song_name, $artist_name, $genre, $release_year, $media_
 
 <body>
 
-    <!-- Header -->
     <?php include 'components/nav.php'; ?>
 
     <div class="mt-5 mb-5 pt-1"></div>
 
-    <!-- Custom Navbar -->
     <div class="navbar-custom py-2 px-3">
         <div class="container-fluid">
             <div class="row align-items-center">
                 <div class="col-md-8 d-flex align-items-center">
                     <div class="search-container w-100">
-                        <input type="text" placeholder="Search" />
+                        <input type="text" id="searchInput" placeholder="Search..." />
                         <button class="search-btn"><i class="fas fa-search"></i></button>
                     </div>
-                    <button class="mic-btn"><i class="fas fa-microphone"></i></button>
+                    <a class="mic-btn btn" href="event.php#feedback"><i class="fas fa-heart-o"></i></a>
                 </div>
 
                 <div class="col-md-4 d-flex justify-content-end align-items-center mt-2 mt-md-0">
-                    <i class="fas fa-bell me-3"></i>
-                    <div class="profile">F</div>
+                    <div class="profile  me-2">F</div>
+                    <i class="fas fa-user"></i>
                 </div>
             </div>
         </div>
     </div>
 
-
     <div class="container-fluid pt-3">
-        <div class="row">
+        <div class="row" id="videoContainer">
             <?php while ($stmt->fetch()): ?>
                 <div class="col-md-4 col-sm-6 mb-4">
                     <a href="mvplayer.php?id=<?= $id ?>" style="text-decoration: none; color: inherit;">
@@ -236,21 +233,31 @@ $stmt->bind_result($id, $song_name, $artist_name, $genre, $release_year, $media_
         </div>
     </div>
 
-    <!-- ##### Footer Area Start ##### -->
-    <?php include '<components/footer.php'; ?>
-    <!-- ##### Footer Area Start ##### -->
+    <?php include 'components/footer.php'; ?>
 
-    <!-- ##### All Javascript Script ##### -->
-    <!-- jQuery-2.2.4 js -->
     <script src="js/jquery/jquery-2.2.4.min.js"></script>
-    <!-- Popper js -->
     <script src="js/bootstrap/popper.min.js"></script>
-    <!-- Bootstrap js -->
     <script src="js/bootstrap/bootstrap.min.js"></script>
-    <!-- All Plugins js -->
     <script src="js/plugins/plugins.js"></script>
-    <!-- Active js -->
     <script src="js/active.js"></script>
+
+    <!-- AJAX Script -->
+    <script>
+        $(document).ready(function () {
+            $('#searchInput').on('keyup', function () {
+                var query = $(this).val();
+                $.ajax({
+                    url: 'mv.php',
+                    type: 'POST',
+                    data: { ajax: true, query: query },
+                    success: function (data) {
+                        $('#videoContainer').html(data);
+                    }
+                });
+            });
+        });
+    </script>
+
 </body>
 
 </html>
